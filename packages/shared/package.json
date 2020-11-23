@@ -1,0 +1,20 @@
+{
+  "name": "@animagic/shared",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": "ivanstnsk",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "clean": "echo clean",
+    "prepack": "yarn build",
+    "build": "yarn clean && yarn compile",
+    "compile": "tsc && cp \"./package.json\" ./dist/",
+    "start": "node .",
+    "dev:start": "yarn build && yarn start",
+    "dev": "nodemon --watch src -e ts,ejs --exec npm run dev:start",
+    "test": "echo 'no test'",
+    "lint": "eslint \"./src/**/*.{ts,tsx}\" --max-warnings=0"
+  }
+}

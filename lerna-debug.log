@@ -1,0 +1,13 @@
+0 silly argv {
+0 silly argv   _: [ 'add' ],
+0 silly argv   scope: '@animagic/shared',
+0 silly argv   globs: [],
+0 silly argv   lernaVersion: '3.22.1',
+0 silly argv   '$0': '../../../../.npm/_npx/26324/bin/lerna',
+0 silly argv   pkg: '@animagic/server'
+0 silly argv }
+1 notice cli v3.22.1
+2 verbose rootPath /Users/ivan_pylyp/study/animagic
+3 info versioning independent
+4 error Error: 404 Not Found - GET https://registry.npmjs.org/@animagic%2fserver - Not found
+4 error     at /Users/ivan_pylyp/study/animagic/node_modules/@evocateur/npm-registry-fetch/check-response.js:104:15

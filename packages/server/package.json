@@ -1,0 +1,31 @@
+{
+  "name": "@animagic/server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "echo clean",
+    "copy-assets": "echo copy",
+    "lint": "eslint ./src --ext .js,.ts,",
+    "lint:ts": "tsc --project tsconfig.json",
+    "tsc": "tsc",
+    "build": "yarn clean && yarn lint && yarn tsc && yarn copy-assets",
+    "start": "node .",
+    "dev:start": "yarn build && yarn start",
+    "dev": "nodemon --watch src --watch ../shared/dist -e ts,js --exec npm run dev:start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ivanstnsk",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "ws": "^7.4.0",
+    "@animagic/shared": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.9",
+    "@types/node": "^14.14.9",
+    "@types/ws": "^7.4.0",
+    "ts-node": "^9.0.0"
+  }
+}
