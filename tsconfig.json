@@ -6,8 +6,11 @@
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": true,
+    "downlevelIteration": true,
     "outDir": "dist",
     "baseUrl": "./packages",
+    "jsx": "react",
+    "skipLibCheck": true,
     "paths": {
       "@animagic/*": ["./*/src"]
     }

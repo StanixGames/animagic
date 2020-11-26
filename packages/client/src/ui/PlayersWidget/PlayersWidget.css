@@ -1,0 +1,22 @@
+.PlayersWidget-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0px;
+  width: 200px;
+  height: auto;
+  padding: 16px;
+  background-color: rgba(0,0,0,0.6);
+}
+
+.PlayersWidget-title {
+  color: #fff;
+}
+
+.PlayersWidget-list {
+  list-style-type: none;
+  padding: 0px;
+}
+
+.PlayersWidget-listItem {
+  color: darkgreen;
+}

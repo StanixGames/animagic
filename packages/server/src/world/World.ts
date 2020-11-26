@@ -1,4 +1,5 @@
-import { Chunk, Block } from '@animagic/shared';
+import { Chunk } from './Chunk';
+import { Block } from './Block';
 
 const generate = (chunk: Chunk) => {
   for (let i = 0; i < chunk.blocks.length; i += 1) {
@@ -8,8 +9,6 @@ const generate = (chunk: Chunk) => {
 
     chunk.blocks[i] = new Block(x, y, material);
   }
-
-  console.log('generated a chunk at ', chunk.x, chunk.y);
 }
 
 export class World {
@@ -20,6 +19,8 @@ export class World {
   }
 
   generate = () => {
+    console.log('generating world...');
+
     this.chunks = new Array(10);
 
     for (let x = 0; x < 10; x += 1) {
@@ -32,10 +33,15 @@ export class World {
       }
     }
 
-    console.log('generated world');
+    console.log('generated world', this.chunks.length, 'x', this.chunks[0].length, 'chunks');
+    console.log('generated world', this.chunks.length * 8, 'x', this.chunks[0].length * 8, 'blocks');
   }
 
   update = (delta: number) => {
     // console.log('update world');
+  }
+
+  destroy = () => {
+    //
   }
 }
