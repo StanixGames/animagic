@@ -12,12 +12,21 @@ dotenv.config();
 
 const SERVER_PORT = process.env.SERVER_PORT;
 
+const delay = (time: number) => new Promise((res) => setTimeout(res, time));
+
 const app = express();
 const server = http.createServer(app);
 const users = new Map();
 const sessions = new Map();
 
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
+app.use(function (_, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.header("Access-Control-Allow-Headers", "*");
+  next();
+});
 
 const wss = new WebSocket.Server({
   clientTracking: false,
@@ -37,10 +46,10 @@ users.set('mike', {
   lastName: 'Vazovsky',
 });
 
-sessions.set('1ab2f959-54e5-4f0b-b614-5c3029ac5edc.69f9b548-9b3d-405c-b45a-ad116b0ad746', {
-  session: '1ab2f959-54e5-4f0b-b614-5c3029ac5edc.69f9b548-9b3d-405c-b45a-ad116b0ad746',
-  login: 'bob',
-});
+// sessions.set('1ab2f959-54e5-4f0b-b614-5c3029ac5edc.69f9b548-9b3d-405c-b45a-ad116b0ad746', {
+//   session: '1ab2f959-54e5-4f0b-b614-5c3029ac5edc.69f9b548-9b3d-405c-b45a-ad116b0ad746',
+//   login: 'bob',
+// });
 
 const doLogin = (login: string, password: string): string | null => {
   if (users.has(login) && users.get(login).password === password) {
@@ -86,8 +95,9 @@ const doGetUser = (session: string) => {
   return users.get(login);
 }
 
-app.post('/login', (req: any, res: any) => {
-  console.log(req.body)
+app.post('/login', async (req: any, res: any) => {
+  await delay(1000);
+
   const { login, password } = req.body;
   const session = doLogin(login, password);
 
@@ -108,7 +118,9 @@ app.post('/login', (req: any, res: any) => {
   }
 });
 
-app.delete('/logout', (req: any, res: any) => {
+app.delete('/logout', async (req: any, res: any) => {
+  await delay(1000);
+
   const { session } = req.body;
   doLogout(session);
 
@@ -120,7 +132,9 @@ app.delete('/logout', (req: any, res: any) => {
   })
 });
 
-app.get('/user', (req: any, res: any) => {
+app.get('/user', async (req: any, res: any) => {
+  await delay(1000);
+
   const { session } = req.body;
 
   if (doCheckSession(session)) {
@@ -141,7 +155,11 @@ app.get('/user', (req: any, res: any) => {
   }
 });
 
-server.on('upgrade', (req: any, socket: any, head: any) => {
+server.on('upgrade', async (req: any, socket: any, head: any) => {
+  console.log('wait 1 sec');
+  await delay(1000);
+  console.log('done wait');
+
   const session = req.url.substring(2);
   const user = doGetUser(session);
 
@@ -165,6 +183,7 @@ server.on('upgrade', (req: any, socket: any, head: any) => {
 });
 
 wss.on('connection', function (socket: any, req: any) {
+  console.log('connected?')
   socket.on('message', (message: string) => {
     console.log(message);
 

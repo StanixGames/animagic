@@ -236,11 +236,6 @@
         "signature": "ad3ebb884385b2c75db55aa85f3b25a74f28a27ceaf09ce2b8d07881643ca982",
         "affectsGlobalScope": false
       },
-      "../src/network/client.ts": {
-        "version": "1f7d52051cba83aa5c0d16ae15c33795d125cd5476fa2bf392fb11461da30c8b",
-        "signature": "3c5c1817c9f7319e9bfd1729449968e6a2fdadbbafac8327fbc92526101140b2",
-        "affectsGlobalScope": false
-      },
       "../../../node_modules/@types/anymatch/index.d.ts": {
         "version": "48b52264fa193879a074197839dbb4796fa07e86350ff888e5361e06aa46df76",
         "signature": "48b52264fa193879a074197839dbb4796fa07e86350ff888e5361e06aa46df76",
@@ -616,7 +611,42 @@
         "signature": "cb6cf0480ee1aa9f706db1f6f5add596a1aa10e8c4beb1817f2318384ba684dc",
         "affectsGlobalScope": false
       },
-      "../../../node_modules/@types/hoist-non-react-statics/node_modules/@types/react/global.d.ts": {
+      "../../../node_modules/@types/history/domutils.d.ts": {
+        "version": "271cde49dfd9b398ccc91bb3aaa43854cf76f4d14e10fed91cbac649aa6cbc63",
+        "signature": "271cde49dfd9b398ccc91bb3aaa43854cf76f4d14e10fed91cbac649aa6cbc63",
+        "affectsGlobalScope": true
+      },
+      "../../../node_modules/@types/history/createbrowserhistory.d.ts": {
+        "version": "c6f2572e21f626260d2e4a65e4e1e42b9b273b6f43b5c3bc115c2926417d3eca",
+        "signature": "c6f2572e21f626260d2e4a65e4e1e42b9b273b6f43b5c3bc115c2926417d3eca",
+        "affectsGlobalScope": false
+      },
+      "../../../node_modules/@types/history/createhashhistory.d.ts": {
+        "version": "374ab77e05e0bf5a52acad6d65121d4bd31068108f23d70186dba5fcd7d6a1a3",
+        "signature": "374ab77e05e0bf5a52acad6d65121d4bd31068108f23d70186dba5fcd7d6a1a3",
+        "affectsGlobalScope": false
+      },
+      "../../../node_modules/@types/history/creatememoryhistory.d.ts": {
+        "version": "a4ecd4bb653aa71093375845fba6250ca0f3c633d0e933fc9bf4b301834eab27",
+        "signature": "a4ecd4bb653aa71093375845fba6250ca0f3c633d0e933fc9bf4b301834eab27",
+        "affectsGlobalScope": false
+      },
+      "../../../node_modules/@types/history/locationutils.d.ts": {
+        "version": "25d91fb9ed77a828cc6c7a863236fb712dafcd52f816eec481bd0c1f589f4404",
+        "signature": "25d91fb9ed77a828cc6c7a863236fb712dafcd52f816eec481bd0c1f589f4404",
+        "affectsGlobalScope": false
+      },
+      "../../../node_modules/@types/history/pathutils.d.ts": {
+        "version": "4cd14cea22eed1bfb0dc76183e56989f897ac5b14c0e2a819e5162eafdcfe243",
+        "signature": "4cd14cea22eed1bfb0dc76183e56989f897ac5b14c0e2a819e5162eafdcfe243",
+        "affectsGlobalScope": false
+      },
+      "../../../node_modules/@types/history/index.d.ts": {
+        "version": "cc53cba64efb30576f2a36f1d7107e4453e84cbd0f371d49cd1dfd208e11233b",
+        "signature": "cc53cba64efb30576f2a36f1d7107e4453e84cbd0f371d49cd1dfd208e11233b",
+        "affectsGlobalScope": false
+      },
+      "../../../node_modules/@types/react/global.d.ts": {
         "version": "ecf78e637f710f340ec08d5d92b3f31b134a46a4fcf2e758690d8c46ce62cba6",
         "signature": "ecf78e637f710f340ec08d5d92b3f31b134a46a4fcf2e758690d8c46ce62cba6",
         "affectsGlobalScope": true
@@ -631,7 +661,7 @@
         "signature": "a7e32dcb90bf0c1b7a1e4ac89b0f7747cbcba25e7beddc1ebf17be1e161842ad",
         "affectsGlobalScope": false
       },
-      "../../../node_modules/@types/hoist-non-react-statics/node_modules/@types/react/index.d.ts": {
+      "../../../node_modules/@types/react/index.d.ts": {
         "version": "5eec5df7493ec6ad30cd641228d5ec7a5cc46d86e04a7f5d4f3cc239c6fa05bc",
         "signature": "5eec5df7493ec6ad30cd641228d5ec7a5cc46d86e04a7f5d4f3cc239c6fa05bc",
         "affectsGlobalScope": true
@@ -731,12 +761,12 @@
         "signature": "f9a2dd6a6084665f093ed0e9664b8e673be2a45e342a59dd4e0e4e552e68a9ad",
         "affectsGlobalScope": false
       },
-      "../../../node_modules/@types/react/global.d.ts": {
+      "../../../node_modules/@types/react-dom/node_modules/@types/react/global.d.ts": {
         "version": "ecf78e637f710f340ec08d5d92b3f31b134a46a4fcf2e758690d8c46ce62cba6",
         "signature": "ecf78e637f710f340ec08d5d92b3f31b134a46a4fcf2e758690d8c46ce62cba6",
         "affectsGlobalScope": true
       },
-      "../../../node_modules/@types/react/index.d.ts": {
+      "../../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts": {
         "version": "277e380acf34d4f66398100a66ac29213ea43674f114906f007204f29cc9a8b7",
         "signature": "277e380acf34d4f66398100a66ac29213ea43674f114906f007204f29cc9a8b7",
         "affectsGlobalScope": true
@@ -745,11 +775,6 @@
         "version": "8483a29c17f7feb768a1f4333cf12ccf1e7341bd89dadcf407e012d5315228d0",
         "signature": "8483a29c17f7feb768a1f4333cf12ccf1e7341bd89dadcf407e012d5315228d0",
         "affectsGlobalScope": false
-      },
-      "../../../node_modules/@types/react-redux/node_modules/@types/react/index.d.ts": {
-        "version": "5eec5df7493ec6ad30cd641228d5ec7a5cc46d86e04a7f5d4f3cc239c6fa05bc",
-        "signature": "5eec5df7493ec6ad30cd641228d5ec7a5cc46d86e04a7f5d4f3cc239c6fa05bc",
-        "affectsGlobalScope": true
       },
       "../../../node_modules/symbol-observable/index.d.ts": {
         "version": "7ccece60f62968f5765383f1f5322ace6937e42c3a2068834ac214fe24f9b7bc",
@@ -764,6 +789,16 @@
       "../../../node_modules/@types/react-redux/index.d.ts": {
         "version": "985e8dafd1a03093d3ec2cf3bc3e75dfc556a1a8b507f896325ebd6aeab57b43",
         "signature": "985e8dafd1a03093d3ec2cf3bc3e75dfc556a1a8b507f896325ebd6aeab57b43",
+        "affectsGlobalScope": false
+      },
+      "../../../node_modules/@types/react-router/index.d.ts": {
+        "version": "0caf70f74777ccb2fff9869da0c51fb832923e9625a84249e00bf107b399bfaa",
+        "signature": "0caf70f74777ccb2fff9869da0c51fb832923e9625a84249e00bf107b399bfaa",
+        "affectsGlobalScope": false
+      },
+      "../../../node_modules/@types/react-router-dom/index.d.ts": {
+        "version": "fd0330b691c4c697c5a8c6b68bdb6727cbf966156a2e131108696a98716a5396",
+        "signature": "fd0330b691c4c697c5a8c6b68bdb6727cbf966156a2e131108696a98716a5396",
         "affectsGlobalScope": false
       },
       "../../../node_modules/@types/resolve/index.d.ts": {
@@ -992,13 +1027,33 @@
         "../../../node_modules/@types/node/fs.d.ts",
         "../../../node_modules/@types/node/index.d.ts"
       ],
-      "../../../node_modules/@types/hoist-non-react-statics/index.d.ts": [
-        "../../../node_modules/@types/hoist-non-react-statics/node_modules/@types/react/index.d.ts"
+      "../../../node_modules/@types/history/createbrowserhistory.d.ts": [
+        "../../../node_modules/@types/history/domutils.d.ts",
+        "../../../node_modules/@types/history/index.d.ts"
       ],
-      "../../../node_modules/@types/hoist-non-react-statics/node_modules/@types/react/index.d.ts": [
-        "../../../node_modules/@types/hoist-non-react-statics/node_modules/@types/react/global.d.ts",
-        "../../../node_modules/@types/prop-types/index.d.ts",
-        "../../../node_modules/csstype/index.d.ts"
+      "../../../node_modules/@types/history/createhashhistory.d.ts": [
+        "../../../node_modules/@types/history/domutils.d.ts",
+        "../../../node_modules/@types/history/index.d.ts"
+      ],
+      "../../../node_modules/@types/history/creatememoryhistory.d.ts": [
+        "../../../node_modules/@types/history/domutils.d.ts",
+        "../../../node_modules/@types/history/index.d.ts"
+      ],
+      "../../../node_modules/@types/history/index.d.ts": [
+        "../../../node_modules/@types/history/createbrowserhistory.d.ts",
+        "../../../node_modules/@types/history/createhashhistory.d.ts",
+        "../../../node_modules/@types/history/creatememoryhistory.d.ts",
+        "../../../node_modules/@types/history/locationutils.d.ts",
+        "../../../node_modules/@types/history/pathutils.d.ts"
+      ],
+      "../../../node_modules/@types/history/locationutils.d.ts": [
+        "../../../node_modules/@types/history/index.d.ts"
+      ],
+      "../../../node_modules/@types/history/pathutils.d.ts": [
+        "../../../node_modules/@types/history/index.d.ts"
+      ],
+      "../../../node_modules/@types/hoist-non-react-statics/index.d.ts": [
+        "../../../node_modules/@types/react/index.d.ts"
       ],
       "../../../node_modules/@types/ioredis/index.d.ts": [
         "../../../node_modules/@types/node/events.d.ts",
@@ -1184,17 +1239,26 @@
         "../../../node_modules/@types/node/stream.d.ts"
       ],
       "../../../node_modules/@types/react-dom/index.d.ts": [
-        "../../../node_modules/@types/react/index.d.ts"
+        "../../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts"
+      ],
+      "../../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts": [
+        "../../../node_modules/@types/prop-types/index.d.ts",
+        "../../../node_modules/@types/react-dom/node_modules/@types/react/global.d.ts",
+        "../../../node_modules/csstype/index.d.ts"
       ],
       "../../../node_modules/@types/react-redux/index.d.ts": [
         "../../../node_modules/@types/hoist-non-react-statics/index.d.ts",
-        "../../../node_modules/@types/hoist-non-react-statics/node_modules/@types/react/index.d.ts",
+        "../../../node_modules/@types/react/index.d.ts",
         "../../../node_modules/redux/index.d.ts"
       ],
-      "../../../node_modules/@types/react-redux/node_modules/@types/react/index.d.ts": [
-        "../../../node_modules/@types/prop-types/index.d.ts",
-        "../../../node_modules/@types/react-redux/node_modules/@types/react/global.d.ts",
-        "../../../node_modules/csstype/index.d.ts"
+      "../../../node_modules/@types/react-router-dom/index.d.ts": [
+        "../../../node_modules/@types/history/index.d.ts",
+        "../../../node_modules/@types/react-router/index.d.ts",
+        "../../../node_modules/@types/react/index.d.ts"
+      ],
+      "../../../node_modules/@types/react-router/index.d.ts": [
+        "../../../node_modules/@types/history/index.d.ts",
+        "../../../node_modules/@types/react/index.d.ts"
       ],
       "../../../node_modules/@types/react/index.d.ts": [
         "../../../node_modules/@types/prop-types/index.d.ts",
@@ -1456,13 +1520,33 @@
         "../../../node_modules/@types/node/fs.d.ts",
         "../../../node_modules/@types/node/index.d.ts"
       ],
+      "../../../node_modules/@types/history/createbrowserhistory.d.ts": [
+        "../../../node_modules/@types/history/domutils.d.ts",
+        "../../../node_modules/@types/history/index.d.ts"
+      ],
+      "../../../node_modules/@types/history/createhashhistory.d.ts": [
+        "../../../node_modules/@types/history/domutils.d.ts",
+        "../../../node_modules/@types/history/index.d.ts"
+      ],
+      "../../../node_modules/@types/history/creatememoryhistory.d.ts": [
+        "../../../node_modules/@types/history/domutils.d.ts",
+        "../../../node_modules/@types/history/index.d.ts"
+      ],
+      "../../../node_modules/@types/history/index.d.ts": [
+        "../../../node_modules/@types/history/createbrowserhistory.d.ts",
+        "../../../node_modules/@types/history/createhashhistory.d.ts",
+        "../../../node_modules/@types/history/creatememoryhistory.d.ts",
+        "../../../node_modules/@types/history/locationutils.d.ts",
+        "../../../node_modules/@types/history/pathutils.d.ts"
+      ],
+      "../../../node_modules/@types/history/locationutils.d.ts": [
+        "../../../node_modules/@types/history/index.d.ts"
+      ],
+      "../../../node_modules/@types/history/pathutils.d.ts": [
+        "../../../node_modules/@types/history/index.d.ts"
+      ],
       "../../../node_modules/@types/hoist-non-react-statics/index.d.ts": [
         "../../../node_modules/@types/hoist-non-react-statics/node_modules/@types/react/index.d.ts"
-      ],
-      "../../../node_modules/@types/hoist-non-react-statics/node_modules/@types/react/index.d.ts": [
-        "../../../node_modules/@types/hoist-non-react-statics/node_modules/@types/react/global.d.ts",
-        "../../../node_modules/@types/prop-types/index.d.ts",
-        "../../../node_modules/csstype/index.d.ts"
       ],
       "../../../node_modules/@types/ioredis/index.d.ts": [
         "../../../node_modules/@types/node/events.d.ts",
@@ -1650,15 +1734,24 @@
       "../../../node_modules/@types/react-dom/index.d.ts": [
         "../../../node_modules/@types/react/index.d.ts"
       ],
+      "../../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts": [
+        "../../../node_modules/@types/prop-types/index.d.ts",
+        "../../../node_modules/@types/react-dom/node_modules/@types/react/global.d.ts",
+        "../../../node_modules/csstype/index.d.ts"
+      ],
       "../../../node_modules/@types/react-redux/index.d.ts": [
         "../../../node_modules/@types/hoist-non-react-statics/index.d.ts",
         "../../../node_modules/@types/hoist-non-react-statics/node_modules/@types/react/index.d.ts",
         "../../../node_modules/redux/index.d.ts"
       ],
-      "../../../node_modules/@types/react-redux/node_modules/@types/react/index.d.ts": [
-        "../../../node_modules/@types/prop-types/index.d.ts",
-        "../../../node_modules/@types/react-redux/node_modules/@types/react/global.d.ts",
-        "../../../node_modules/csstype/index.d.ts"
+      "../../../node_modules/@types/react-router-dom/index.d.ts": [
+        "../../../node_modules/@types/history/index.d.ts",
+        "../../../node_modules/@types/react-router/index.d.ts",
+        "../../../node_modules/@types/react/index.d.ts"
+      ],
+      "../../../node_modules/@types/react-router/index.d.ts": [
+        "../../../node_modules/@types/history/index.d.ts",
+        "../../../node_modules/@types/react/index.d.ts"
       ],
       "../../../node_modules/@types/react/index.d.ts": [
         "../../../node_modules/@types/prop-types/index.d.ts",
@@ -1868,9 +1961,14 @@
       "../../../node_modules/@types/express/index.d.ts",
       "../../../node_modules/@types/glob/index.d.ts",
       "../../../node_modules/@types/graceful-fs/index.d.ts",
+      "../../../node_modules/@types/history/createbrowserhistory.d.ts",
+      "../../../node_modules/@types/history/createhashhistory.d.ts",
+      "../../../node_modules/@types/history/creatememoryhistory.d.ts",
+      "../../../node_modules/@types/history/domutils.d.ts",
+      "../../../node_modules/@types/history/index.d.ts",
+      "../../../node_modules/@types/history/locationutils.d.ts",
+      "../../../node_modules/@types/history/pathutils.d.ts",
       "../../../node_modules/@types/hoist-non-react-statics/index.d.ts",
-      "../../../node_modules/@types/hoist-non-react-statics/node_modules/@types/react/global.d.ts",
-      "../../../node_modules/@types/hoist-non-react-statics/node_modules/@types/react/index.d.ts",
       "../../../node_modules/@types/html-minifier-terser/index.d.ts",
       "../../../node_modules/@types/ioredis/index.d.ts",
       "../../../node_modules/@types/istanbul-lib-coverage/index.d.ts",
@@ -1937,8 +2035,11 @@
       "../../../node_modules/@types/qs/index.d.ts",
       "../../../node_modules/@types/range-parser/index.d.ts",
       "../../../node_modules/@types/react-dom/index.d.ts",
+      "../../../node_modules/@types/react-dom/node_modules/@types/react/global.d.ts",
+      "../../../node_modules/@types/react-dom/node_modules/@types/react/index.d.ts",
       "../../../node_modules/@types/react-redux/index.d.ts",
-      "../../../node_modules/@types/react-redux/node_modules/@types/react/index.d.ts",
+      "../../../node_modules/@types/react-router-dom/index.d.ts",
+      "../../../node_modules/@types/react-router/index.d.ts",
       "../../../node_modules/@types/react/global.d.ts",
       "../../../node_modules/@types/react/index.d.ts",
       "../../../node_modules/@types/redis/index.d.ts",
@@ -2017,7 +2118,6 @@
       "../src/models/client.ts",
       "../src/models/index.ts",
       "../src/models/player.ts",
-      "../src/network/client.ts",
       "../src/types/index.ts",
       "../src/types/shapeaabb.ts",
       "../src/types/vector.ts",

@@ -42,37 +42,48 @@ export class Game {
       this.entityRenderer.resize(window.innerWidth, window.innerHeight);
       this.worldRenderer.resize(window.innerWidth, window.innerHeight);
     });
-
-    this.init();
   }
 
-  init = () => {
-    const gameElem = document.getElementById('game');
-    
-    if (gameElem) {
-      gameElem.appendChild(this.app.view);
-    } else {
-      console.log('Invalid game init');
-    }
-    this.app.ticker.add(this.tick);
-  
-    this.worldManager.init();
-    this.inputManager.init();
-    this.playerManager.init();
-    this.networkManager.init();
+  init = (session: string): Promise<void> => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        this.networkManager.attachSession(session);
+        await this.networkManager.init();
 
-    this.worldRenderer.init();
-    this.entityRenderer.init();
+        const gameElem = document.getElementById('game');
+        
+        if (gameElem) {
+          gameElem.appendChild(this.app.view);
+        } else {
+          console.log('Invalid game init');
+        }
+
+        this.app.ticker.add(this.tick);
+        this.worldManager.init();
+        this.inputManager.init();
+        this.playerManager.init();
+        
+        this.worldRenderer.init();
+        this.entityRenderer.init();
+        
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
   };
 
-  destroy = () => {
-    this.playerManager.destroy();
-    this.worldManager.destroy();
-    this.inputManager.destroy();
-    this.networkManager.destroy();
+  destroy = (): Promise<void[]> => {
+    return Promise.all([
+      this.networkManager.destroy(),
+    ]);
+    // this.playerManager.destroy();
+    // this.worldManager.destroy();
+    // this.inputManager.destroy();
+    // this.networkManager.destroy();
 
-    this.worldRenderer.destroy();
-    this.entityRenderer.destroy();
+    // this.worldRenderer.destroy();
+    // this.entityRenderer.destroy();
   };
 
   tick = (time: number) => {

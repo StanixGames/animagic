@@ -29,7 +29,7 @@ module.exports = {
         requireLast: false,
       },
     }],
-    'max-lines': ['error', 200],
+    // 'max-lines': ['error', 200],
     'import/no-default-export': 0,
     'import/prefer-default-export': 0,
     'arrow-body-style': 0,

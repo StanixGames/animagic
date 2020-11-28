@@ -1,0 +1,17 @@
+.LoadingOverlay-wrapper {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.LoadingOverlay-text {
+  font-size: 18px;
+  color: #fff;
+  font-family: monospace;
+}

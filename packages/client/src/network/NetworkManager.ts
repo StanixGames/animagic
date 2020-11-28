@@ -1,53 +1,75 @@
 import { Game } from '../Game';
 
 import { Manager } from './Manager';
-import { ConsumerClient } from './ConsumerClient';
 import { PacketManager } from './PacketManager';
-import { ClientManager } from './ClientManager';
-import {
-  ClientConnectedPacket,
-  ClientsStatePacket,
-} from './packets';
 
-const WS_URL = 'ws://localhost:1993?1ab2f959-54e5-4f0b-b614-5c3029ac5edc.69f9b548-9b3d-405c-b45a-ad116b0ad746';
-const PACKETS_PER_UPDATE = 20;
+const WS_URL = 'ws://localhost:1993';
+
+const WEBSOCKET_OPEN = 1;
+const WEBSOCKET_CLOSED = 3;
 
 export class NetworkManager extends Manager {
-  private ws: WebSocket;
+  private ws?: WebSocket;
+  private session?: string;
 
   constructor(game: Game) {
     super(game);
-    this.ws = new WebSocket(WS_URL);
   }
 
-  init(): void {
-    this.ws.onopen = this.handleOpen;
-    this.ws.onclose = this.handleClose;
-    this.ws.onmessage = this.handleMessage;
-    this.ws.onerror = this.handleError;
+  attachSession = (session: string) => {
+    this.session = session;
+  }
+
+  init(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (!this.session) {
+        reject('Invalid session');
+        return;
+      }
+
+      const url = `${WS_URL}?${this.session}`;
+
+      this.ws = new WebSocket(url);
+      this.ws.onopen = this.handleConnection;
+      this.ws.onclose = this.handleClose;
+      this.ws.onmessage = this.handleMessage;
+      this.ws.onerror = this.handleError;
+
+      this.waitForSocketStateChange(this.ws, WEBSOCKET_OPEN, resolve);
+    });
   }
   
-  destroy(): void {
-    //
+  destroy(): Promise<void> {
+    return new Promise((resolve) => {
+      if (this.ws) {
+        this.ws.close();
+        // setTimeout(resolve, 2000);
+        this.waitForSocketStateChange(this.ws, WEBSOCKET_CLOSED, resolve);
+      } else {
+        resolve();
+      }
+    });
   }
+
+  private waitForSocketStateChange = (socket: WebSocket, state: number, callback: () => void) => {
+    setTimeout(() => {
+      if (socket.readyState === state) {
+        if (callback != null) {
+          callback();
+        }
+      } else {
+        console.log("wait for websocket state change...")
+        this.waitForSocketStateChange(socket, state, callback);
+      }
+  }, 500);
+}
 
   update = (delta: number): void => {
     PacketManager.update(delta);
   }
 
-  handleOpen = (event: any): void => {
+  handleConnection = (event: any): void => {
     console.log('connected');
-
-    // this.ws.send(JSON.stringify({
-    //   type: 'gameJoin',
-    //   payload: {
-    //     playerId: 'Player123',
-    //     position: {
-    //       x: (this.game.playerManager.getPos().x || 0) - window.innerWidth / 2,
-    //       y: (this.game.playerManager.getPos().y || 0) - window.innerHeight / 2,
-    //     }
-    //   }
-    // }))
   };
 
   handleClose = (event: any): void => {
@@ -76,6 +98,8 @@ export class NetworkManager extends Manager {
   };
 
   public sendMessage = (message: string): void => {
-    this.ws.send(message);
+    if (this.ws) {
+      this.ws.send(message);
+    }
   }
 }

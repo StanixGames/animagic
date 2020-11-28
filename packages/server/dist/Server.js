@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -13,11 +22,19 @@ const network_1 = require("./network");
 const Game_1 = require("./Game");
 dotenv_1.default.config();
 const SERVER_PORT = process.env.SERVER_PORT;
+const delay = (time) => new Promise((res) => setTimeout(res, time));
 const app = express_1.default();
 const server = http_1.default.createServer(app);
 const users = new Map();
 const sessions = new Map();
+app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use(body_parser_1.default.json());
+app.use(function (_, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.header("Access-Control-Allow-Headers", "*");
+    next();
+});
 const wss = new ws_1.default.Server({
     clientTracking: false,
     noServer: true,
@@ -34,10 +51,10 @@ users.set('mike', {
     firstName: 'Mike',
     lastName: 'Vazovsky',
 });
-sessions.set('1ab2f959-54e5-4f0b-b614-5c3029ac5edc.69f9b548-9b3d-405c-b45a-ad116b0ad746', {
-    session: '1ab2f959-54e5-4f0b-b614-5c3029ac5edc.69f9b548-9b3d-405c-b45a-ad116b0ad746',
-    login: 'bob',
-});
+// sessions.set('1ab2f959-54e5-4f0b-b614-5c3029ac5edc.69f9b548-9b3d-405c-b45a-ad116b0ad746', {
+//   session: '1ab2f959-54e5-4f0b-b614-5c3029ac5edc.69f9b548-9b3d-405c-b45a-ad116b0ad746',
+//   login: 'bob',
+// });
 const doLogin = (login, password) => {
     if (users.has(login) && users.get(login).password === password) {
         for (let s of sessions.values()) {
@@ -72,8 +89,8 @@ const doGetUser = (session) => {
     }
     return users.get(login);
 };
-app.post('/login', (req, res) => {
-    console.log(req.body);
+app.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    yield delay(1000);
     const { login, password } = req.body;
     const session = doLogin(login, password);
     if (!session) {
@@ -92,8 +109,9 @@ app.post('/login', (req, res) => {
             },
         });
     }
-});
-app.delete('/logout', (req, res) => {
+}));
+app.delete('/logout', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    yield delay(1000);
     const { session } = req.body;
     doLogout(session);
     res.status(200).send({
@@ -102,8 +120,9 @@ app.delete('/logout', (req, res) => {
             message: 'Logout'
         }
     });
-});
-app.get('/user', (req, res) => {
+}));
+app.get('/user', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    yield delay(1000);
     const { session } = req.body;
     if (doCheckSession(session)) {
         res.status(200).send({
@@ -122,8 +141,11 @@ app.get('/user', (req, res) => {
             }
         });
     }
-});
-server.on('upgrade', (req, socket, head) => {
+}));
+server.on('upgrade', (req, socket, head) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('wait 1 sec');
+    yield delay(1000);
+    console.log('done wait');
     const session = req.url.substring(2);
     const user = doGetUser(session);
     if (doCheckSession(session) && user) {
@@ -137,8 +159,9 @@ server.on('upgrade', (req, socket, head) => {
         socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
         socket.destroy();
     }
-});
+}));
 wss.on('connection', function (socket, req) {
+    console.log('connected?');
     socket.on('message', (message) => {
         console.log(message);
         try {

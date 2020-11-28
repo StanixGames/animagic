@@ -1,0 +1,26 @@
+.LobbyScreen-wrapper {
+  display: flex;
+  flex: 1;
+  background-color: #292828;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 100px;
+}
+
+.LobbyScreen-title {
+  font-size: 24px;
+  color: #89a874;
+  font-family: monospace;
+}
+
+.LobbyScreen-button {
+	border-style: solid;
+	font-size: 19px;
+	padding: 10px 16px;
+	border-radius: 11px;
+	background-color: #3c6124;
+	border-color: #203810;
+  font-family: monospace;
+  margin-top: 32px;
+}

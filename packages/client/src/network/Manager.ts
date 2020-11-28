@@ -7,6 +7,6 @@ export abstract class Manager {
     this.game = game;
   }
 
-  abstract init(): void;
-  abstract destroy(): void;
+  abstract init(): Promise<void>;
+  abstract destroy(): Promise<void>;
 }

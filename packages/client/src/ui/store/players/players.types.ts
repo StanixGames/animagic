@@ -1,4 +1,4 @@
-import {Reducer, Action} from 'redux';
+import { Reducer, Action } from 'redux';
 
 export interface PlayersState {
   players: Array<string>;
