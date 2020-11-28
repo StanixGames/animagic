@@ -1,0 +1,1 @@
+{"version":3,"file":"Entity copy.js","sourceRoot":"","sources":["../../src/world/Entity copy.ts"],"names":[],"mappings":";;;AAKA,MAAa,MAAM;IAMjB,YAAY,EAAU,EAAE,IAAgB,EAAE,QAAgB,EAAE,QAAgB;QAC1E,IAAI,CAAC,EAAE,GAAG,EAAE,CAAC;QACb,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;QACjB,IAAI,CAAC,QAAQ,GAAG,QAAQ,CAAC;QACzB,IAAI,CAAC,QAAQ,GAAG,QAAQ,CAAC;IAC3B,CAAC;CACF;AAZD,wBAYC"}

@@ -1,23 +1,23 @@
-import WebSocket from 'ws';
-
 import {
   Packet,
-  ClientConnectedPacket,
   ClientsStatePacket,
+  PlayerJoinPacket,
 } from '../network/packets';
 import { Queue } from '../utils/Queue';
 
 import { store } from '../ui/store';
 import * as PlayersActions from '../ui/store/players/players.actions';
 
-import { ClientManager } from './ClientManager';
+import { Game } from '../Game';
+
+// import { ClientManager } from './ClientManager';
 
 const PACKETS_PER_UPDATE = 20;
 
 const packets: Queue<Packet.In> = new Queue<Packet.In>();
 
 export class PacketManager {
-  public static update = (delta: number) => {
+  public static update = (delta: number, game: Game) => {
     let processedPackets = 0;
 
     while (processedPackets < PACKETS_PER_UPDATE) {
@@ -34,39 +34,24 @@ export class PacketManager {
       }
       
       switch (packet.type) {
-        case 'CLIENT_CONNECTED': {
-          const typedPacket = packet as ClientConnectedPacket.In;
-          const packetOut: ClientConnectedPacket.Out = {
-            type: 'CLIENT_CONNECTED',
-            client: {
-              login: typedPacket.client.login,
-              firstName: typedPacket.client.firstName,
-              lastName: typedPacket.client.lastName,
-            }
-          }
-
-          console.log('PROCEES', packetOut)
+        case 'PLAYER_JOIN': {
+          const typedPacket = packet as PlayerJoinPacket.In;
+          
+          game.worldManager.addPlayer(typedPacket.entity);
           break;
         };
 
         case 'CLIENTS_STATE': {
-          const typedPacket = packet as ClientsStatePacket.In;
-          const players = typedPacket.clients.map((client) => client.login);
+          // const typedPacket = packet as ClientsStatePacket.In;
+          // const players = typedPacket.clients.map((client) => client.login);
           
-          store.dispatch(PlayersActions.setPlayers(players));
+          // store.dispatch(PlayersActions.setPlayers(players));
 
           break;
         };
 
         default: {
-          // const { socket } = packet;
-          // const packetOut = {
-          //   type: 'INVALID_PACKET',
-          //   // data: rest,
-          // };
-
-          // const data = JSON.stringify(packetOut);
-          // socket.send(data);
+          console.log('Invalid packet', packet);
         }
       }
 

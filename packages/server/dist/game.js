@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Game = void 0;
-const world_1 = require("./world");
+exports.game = void 0;
+const managers_1 = require("./managers");
 const network_1 = require("./network");
 class Game {
     constructor() {
@@ -23,14 +23,14 @@ class Game {
         };
         this.update = (delta) => {
             network_1.NetworkManager.update(delta);
-            this.world.update(delta);
+            this.worldManager.update(delta);
         };
         this.destroy = () => {
-            this.world.destroy();
+            this.worldManager.destroy();
         };
-        this.world = new world_1.World();
+        this.worldManager = new managers_1.WorldManager();
         this.loop();
     }
 }
-exports.Game = Game;
+exports.game = new Game();
 //# sourceMappingURL=Game.js.map

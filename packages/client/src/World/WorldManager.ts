@@ -1,40 +1,37 @@
 import { Manager } from '../types';
 import { Game } from '../Game';
 
-import { Chunk } from './Chunk';
+import { Entity } from './Entity';
+import { World } from './World';
 // import { WorldTile } from './WorldTile';
 
 export class WorldManager extends Manager {
-  private chunks: Map<string, Chunk>;
-  private scaling = 1;
+  readonly world: World;
+  private scaling = 20;
 
   constructor(game: Game) {
     super(game);
-    this.chunks = new Map();
+    this.world = new World();
   }
 
-  init(): void {
-    for (let x = 0; x < 20; x += 1) {
-      for (let y = 0; y < 20; y += 1) {
-        const chunk = new Chunk(x, y);
-        chunk.generate();
-        this.chunks.set(`${x}.${y}`, chunk);
-      }
-    }
-
-    console.log('generated chunks');
+  init(): Promise<void> {
+    return Promise.resolve();
   }
 
-  destroy(): void {
-    // todo
+  destroy(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  public toWorldDistance = (distance: number) => {
+    return distance / this.scaling;
   }
 
   public updateScaling(scale: number) {
     this.scaling += scale;
-    if (this.scaling < 0.5) {
-      this.scaling = 0.5;
-    } else if (this.scaling > 3) {
-      this.scaling = 4;
+    if (this.scaling < 10) {
+      this.scaling = 10;
+    } else if (this.scaling > 50) {
+      this.scaling = 50;
     }
   }
 
@@ -42,7 +39,12 @@ export class WorldManager extends Manager {
     return this.scaling;
   }
 
-  public getChunkAt = (x: number, y: number): Chunk | undefined => {
-    return this.chunks.get(`${x}.${y}`);
-  };
+  // public getChunkAt = (x: number, y: number): Chunk | undefined => {
+  //   return undefined;
+  //   // return this.chunks.get(`${x}.${y}`);
+  // };
+
+  public addPlayer = (entity: Entity) => {
+    this.world.addEntity(entity)
+  }
 }

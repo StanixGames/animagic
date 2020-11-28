@@ -1,14 +1,14 @@
-import { World } from './world';
+import { WorldManager } from './managers';
 import { NetworkManager } from './network';
 
-export class Game {
+class Game {
   private tickLengthMs = 1000 / 20;
   private previousTick = Date.now();
 
-  private world: World;
+  readonly worldManager: WorldManager;
 
   constructor() {
-    this.world = new World();
+    this.worldManager = new WorldManager();
 
     this.loop();
   }
@@ -32,10 +32,12 @@ export class Game {
 
   update = (delta: number) => {
     NetworkManager.update(delta);
-    this.world.update(delta);
+    this.worldManager.update(delta);
   }
 
   destroy = () => {
-    this.world.destroy();
+    this.worldManager.destroy();
   }
 }
+
+export const game = new Game();

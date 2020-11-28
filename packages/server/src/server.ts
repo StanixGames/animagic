@@ -6,7 +6,8 @@ import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 
 import { PacketManager, NetworkManager } from './network';
-import { Game } from './Game';
+import { Entity } from './world';
+import { game } from './Game';
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ const app = express();
 const server = http.createServer(app);
 const users = new Map();
 const sessions = new Map();
+const players = new Map();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
@@ -50,6 +52,11 @@ users.set('mike', {
 //   session: '1ab2f959-54e5-4f0b-b614-5c3029ac5edc.69f9b548-9b3d-405c-b45a-ad116b0ad746',
 //   login: 'bob',
 // });
+
+// players.set('bob', {
+//   login: 'bob',
+//   playerEntityId: '12345',
+// })
 
 const doLogin = (login: string, password: string): string | null => {
   if (users.has(login) && users.get(login).password === password) {
@@ -94,6 +101,24 @@ const doGetUser = (session: string) => {
 
   return users.get(login);
 }
+
+// const doGetPlayer = (session: string): Entity | null => {
+//   const user = doGetUser(session);
+
+//   if (!user) {
+//     return null;
+//   }
+
+//   const { login } = user;
+
+//   const playerEntity = game.worldManager.getPlayerEntity(login);
+
+//   return playerEntity;
+// }
+
+// const doCreatePlayer = (session: string) => {
+
+// }
 
 app.post('/login', async (req: any, res: any) => {
   await delay(1000);
@@ -156,9 +181,9 @@ app.get('/user', async (req: any, res: any) => {
 });
 
 server.on('upgrade', async (req: any, socket: any, head: any) => {
-  console.log('wait 1 sec');
-  await delay(1000);
-  console.log('done wait');
+  // console.log('wait 1 sec');
+  // await delay(1000);
+  // console.log('done wait');
 
   const session = req.url.substring(2);
   const user = doGetUser(session);
@@ -183,9 +208,8 @@ server.on('upgrade', async (req: any, socket: any, head: any) => {
 });
 
 wss.on('connection', function (socket: any, req: any) {
-  console.log('connected?')
   socket.on('message', (message: string) => {
-    console.log(message);
+    // console.log(message);
 
     try {
       const packet = PacketManager.parsePacket(message, socket);
@@ -209,8 +233,6 @@ wss.on('connection', function (socket: any, req: any) {
 server.listen(SERVER_PORT, () => {
   console.log(`Listening on http://localhost:${SERVER_PORT}`);
 });
-
-const game = new Game();
 
 process.on('SIGTERM', () => {
   console.info('SIGTERM signal received.');

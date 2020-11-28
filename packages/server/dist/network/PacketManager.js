@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PacketManager = void 0;
 const utils_1 = require("../utils");
+const Game_1 = require("../Game");
 const ClientManager_1 = require("./ClientManager");
 const PACKETS_PER_UPDATE = 20;
 const packets = new utils_1.Queue();
@@ -17,16 +18,18 @@ PacketManager.update = (delta) => {
         const packet = packets.pop();
         console.log('processing', packet);
         switch (packet.type) {
-            case 'CLIENT_CONNECTED':
+            case 'PLAYER_JOIN':
                 {
                     const typedPacket = packet;
+                    const entity = Game_1.game.worldManager.getPlayerEntity(typedPacket.login);
+                    if (!entity) {
+                        console.error('INVALID PLAYER ENTITY INSTANCE');
+                        break;
+                    }
                     const packetOut = {
-                        type: 'CLIENT_CONNECTED',
-                        client: {
-                            login: typedPacket.client.login,
-                            firstName: typedPacket.client.firstName,
-                            lastName: typedPacket.client.lastName,
-                        }
+                        type: 'PLAYER_JOIN',
+                        login: typedPacket.login,
+                        entity,
                     };
                     const data = JSON.stringify(packetOut);
                     packet.socket.send(data);

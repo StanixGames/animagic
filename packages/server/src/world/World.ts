@@ -1,5 +1,9 @@
+import { v4 } from 'uuid';
+
 import { Chunk } from './Chunk';
 import { Block } from './Block';
+import { Entity } from './Entity';
+import { PlayableEntity } from './PlayableEntity';
 
 const generate = (chunk: Chunk) => {
   for (let i = 0; i < chunk.blocks.length; i += 1) {
@@ -13,9 +17,27 @@ const generate = (chunk: Chunk) => {
 
 export class World {
   public chunks: Array<Array<Chunk>>;
+  public playableEntities: Map<string, PlayableEntity>;
+  public entities: Map<string, Entity>;
 
   constructor() {
     this.generate();
+
+    this.playableEntities = new Map<string, PlayableEntity>();
+    this.entities = new Map<string, Entity>();
+
+    const bobEntity = new Entity(
+      v4(),
+      'player',
+      { x: 0, y: 0 },
+      { x: 10, y: 3 },
+      { x: 0, y: 0 },
+      0x66b324
+    );
+    const bobPlayableEntity = new PlayableEntity(bobEntity.id, 'bob');
+
+    this.entities.set(bobEntity.id, bobEntity);
+    this.playableEntities.set('bob', bobPlayableEntity);
   }
 
   generate = () => {

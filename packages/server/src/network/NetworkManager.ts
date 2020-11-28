@@ -7,6 +7,7 @@ import { ClientManager } from './ClientManager';
 import {
   ClientConnectedPacket,
   ClientsStatePacket,
+  PlayerJoinPacket,
 } from './packets';
 
 export class NetworkManager {
@@ -26,12 +27,17 @@ export class NetworkManager {
     };
 
     ClientManager.add(client);
-    const clientConnectedPacketIn: ClientConnectedPacket.In = {
-      type: 'CLIENT_CONNECTED',
+    // const clientConnectedPacketIn: ClientConnectedPacket.In = {
+    //   type: 'CLIENT_CONNECTED',
+    //   socket,
+    //   client: ClientManager.getByLogin(client.login),
+    // };
+    const playerJoinPacketIn: PlayerJoinPacket.In = {
+      type: 'PLAYER_JOIN',
       socket,
-      client: ClientManager.getByLogin(client.login),
+      login: client.login,
     };
-    PacketManager.queuePacket(clientConnectedPacketIn);
+    PacketManager.queuePacket(playerJoinPacketIn);
 
     // broadcast all clients
     const clientsStatePacketIn: ClientsStatePacket.In = {

@@ -33,12 +33,12 @@ export class PlayerManager extends Manager {
     this.speed = 0;
   }
 
-  init(): void {
-    //
+  init(): Promise<void> {
+    return Promise.resolve();
   }
   
-  destroy(): void {
-    //
+  destroy(): Promise<void> {
+    return Promise.resolve();
   }
 
   update = (delta: number): void => {

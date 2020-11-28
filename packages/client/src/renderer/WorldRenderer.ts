@@ -4,11 +4,11 @@ import { CHUNK_SIZE } from '../World';
 import { ShapeAABB } from '../types';
 import { checkCollisionAABB } from '../utils/Geometry';
 
-import Renderer from './types';
+import { AbstractRenderer } from './types';
 
 const ACTIVE_CHUNKS_SIZE = 10;
 
-export class WorldRenderer extends Renderer {
+export class WorldRenderer extends AbstractRenderer {
   private worldLayer: PIXI.Graphics;
   private outterClipMask: PIXI.Graphics;
   private viewClipArea: ShapeAABB;
@@ -35,10 +35,19 @@ export class WorldRenderer extends Renderer {
     this.blockSize = window.innerHeight / 40;
   }
 
-  init() {
+  init(): Promise<void> {
     this.game.app.stage.addChild(this.worldLayer);
     this.game.app.stage.addChild(this.outterClipMask);
     this.game.app.stage.mask = this.outterClipMask;
+
+    return Promise.resolve();
+  }
+
+  destroy(): Promise<void> {
+    this.game.app.stage.removeChild(this.worldLayer);
+    this.game.app.stage.removeChild(this.outterClipMask);
+
+    return Promise.resolve();
   }
 
   resize = (width: number, height: number): void => {
@@ -58,11 +67,6 @@ export class WorldRenderer extends Renderer {
     this.blockSize = height / 40;
   }
 
-  destroy() {
-    this.game.app.stage.removeChild(this.worldLayer);
-    this.game.app.stage.removeChild(this.outterClipMask);
-  }
-
   prepare(): void {
     this.worldLayer.clear();
     const worldScaling = this.game.worldManager.getScaling();
@@ -70,6 +74,8 @@ export class WorldRenderer extends Renderer {
   }
   
   render(): void {
+    return ;
+
     const offset = this.game.playerManager.getPos();
     const CAMERA_OFFSET_X = offset.x;
     const CAMERA_OFFSET_Y = offset.y;
@@ -106,42 +112,42 @@ export class WorldRenderer extends Renderer {
           continue;
         }
 
-          const chunk = this.game.worldManager.getChunkAt(x, y);
+          // const chunk = this.game.worldManager.getChunkAt(x, y);
 
-          if (!chunk) {
-            continue;
-          }
+          // if (!chunk) {
+          //   continue;
+          // }
 
-          const tiles = chunk.getTiles();
+          // const tiles = chunk.getTiles();
     
-          this.worldLayer.lineStyle(0, 0xffffff);
-          tiles.forEach((tile) => {
+          // this.worldLayer.lineStyle(0, 0xffffff);
+          // tiles.forEach((tile) => {
 
-            const x = CHUNK_X + tile.x * this.blockSize;
-            const y = CHUNK_Y + tile.y * this.blockSize;
+          //   const x = CHUNK_X + tile.x * this.blockSize;
+          //   const y = CHUNK_Y + tile.y * this.blockSize;
 
-            const isInViewArea = checkCollisionAABB({
-              x,
-              y,
-              width: this.blockSize,
-              height: this.blockSize,
-            }, this.viewClipArea);
+          //   const isInViewArea = checkCollisionAABB({
+          //     x,
+          //     y,
+          //     width: this.blockSize,
+          //     height: this.blockSize,
+          //   }, this.viewClipArea);
 
-            if (isInViewArea) {
-              this.worldLayer.beginFill(tile.material === 'grass' ? 0x1a590d : 0x9e9e7d, 0.6);
-              this.worldLayer.drawRect(x, y, this.blockSize, this.blockSize);
-              this.worldLayer.endFill();
-              this.worldLayer.closePath();
-            }
-          });
+          //   if (isInViewArea) {
+          //     this.worldLayer.beginFill(tile.material === 'grass' ? 0x1a590d : 0x9e9e7d, 0.6);
+          //     this.worldLayer.drawRect(x, y, this.blockSize, this.blockSize);
+          //     this.worldLayer.endFill();
+          //     this.worldLayer.closePath();
+          //   }
+          // });
     
-          this.worldLayer.lineStyle(1, isActiveChunk ? 0x00FFFF : 0xFF0000);
-          this.worldLayer.moveTo(CHUNK_X, CHUNK_Y);
-          this.worldLayer.lineTo(CHUNK_X + CHUNK_TILES_SIZE, CHUNK_Y);
-          this.worldLayer.lineTo(CHUNK_X + CHUNK_TILES_SIZE, CHUNK_Y + CHUNK_TILES_SIZE);
-          this.worldLayer.lineTo(CHUNK_X, CHUNK_Y + CHUNK_TILES_SIZE);
-          this.worldLayer.lineTo(CHUNK_X, CHUNK_Y);
-          this.worldLayer.closePath();
+          // this.worldLayer.lineStyle(1, isActiveChunk ? 0x00FFFF : 0xFF0000);
+          // this.worldLayer.moveTo(CHUNK_X, CHUNK_Y);
+          // this.worldLayer.lineTo(CHUNK_X + CHUNK_TILES_SIZE, CHUNK_Y);
+          // this.worldLayer.lineTo(CHUNK_X + CHUNK_TILES_SIZE, CHUNK_Y + CHUNK_TILES_SIZE);
+          // this.worldLayer.lineTo(CHUNK_X, CHUNK_Y + CHUNK_TILES_SIZE);
+          // this.worldLayer.lineTo(CHUNK_X, CHUNK_Y);
+          // this.worldLayer.closePath();
 
         }
       }

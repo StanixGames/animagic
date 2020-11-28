@@ -4,8 +4,10 @@ import {
   Packet,
   ClientConnectedPacket,
   ClientsStatePacket,
+  PlayerJoinPacket,
 } from '../network/packets';
 import { Queue } from '../utils';
+import { game } from '../Game';
 
 import { ClientManager } from './ClientManager';
 
@@ -26,15 +28,19 @@ export class PacketManager {
       console.log('processing', packet)
       
       switch (packet.type) {
-        case 'CLIENT_CONNECTED': {
-          const typedPacket = packet as ClientConnectedPacket.In;
-          const packetOut: ClientConnectedPacket.Out = {
-            type: 'CLIENT_CONNECTED',
-            client: {
-              login: typedPacket.client.login,
-              firstName: typedPacket.client.firstName,
-              lastName: typedPacket.client.lastName,
-            }
+        case 'PLAYER_JOIN': {
+          const typedPacket = packet as PlayerJoinPacket.In;
+          const entity = game.worldManager.getPlayerEntity(typedPacket.login);
+
+          if (!entity) {
+            console.error('INVALID PLAYER ENTITY INSTANCE');
+            break;
+          }
+
+          const packetOut: PlayerJoinPacket.Out = {
+            type: 'PLAYER_JOIN',
+            login: typedPacket.login,
+            entity,
           }
 
           const data = JSON.stringify(packetOut);

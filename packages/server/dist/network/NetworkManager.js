@@ -15,12 +15,17 @@ NetworkManager.handleConnection = (socket, session, login, firstName, lastName) 
         lastName,
     };
     ClientManager_1.ClientManager.add(client);
-    const clientConnectedPacketIn = {
-        type: 'CLIENT_CONNECTED',
+    // const clientConnectedPacketIn: ClientConnectedPacket.In = {
+    //   type: 'CLIENT_CONNECTED',
+    //   socket,
+    //   client: ClientManager.getByLogin(client.login),
+    // };
+    const playerJoinPacketIn = {
+        type: 'PLAYER_JOIN',
         socket,
-        client: ClientManager_1.ClientManager.getByLogin(client.login),
+        login: client.login,
     };
-    PacketManager_1.PacketManager.queuePacket(clientConnectedPacketIn);
+    PacketManager_1.PacketManager.queuePacket(playerJoinPacketIn);
     // broadcast all clients
     const clientsStatePacketIn = {
         type: 'CLIENTS_STATE',

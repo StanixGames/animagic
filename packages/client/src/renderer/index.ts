@@ -1,2 +1,1 @@
-export * from './WorldRenderer';
-export * from './EntityRenderer';
+export * from './Renderer';

@@ -1,8 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.World = void 0;
+const uuid_1 = require("uuid");
 const Chunk_1 = require("./Chunk");
 const Block_1 = require("./Block");
+const Entity_1 = require("./Entity");
+const PlayableEntity_1 = require("./PlayableEntity");
 const generate = (chunk) => {
     for (let i = 0; i < chunk.blocks.length; i += 1) {
         const x = i % Chunk_1.Chunk.SIZE;
@@ -34,6 +37,12 @@ class World {
             //
         };
         this.generate();
+        this.playableEntities = new Map();
+        this.entities = new Map();
+        const bobEntity = new Entity_1.Entity(uuid_1.v4(), 'player', { x: 0, y: 0 }, { x: 10, y: 3 }, { x: 0, y: 0 }, 0x66b324);
+        const bobPlayableEntity = new PlayableEntity_1.PlayableEntity(bobEntity.id, 'bob');
+        this.entities.set(bobEntity.id, bobEntity);
+        this.playableEntities.set('bob', bobPlayableEntity);
     }
 }
 exports.World = World;

@@ -65,7 +65,7 @@ export class NetworkManager extends Manager {
 }
 
   update = (delta: number): void => {
-    PacketManager.update(delta);
+    PacketManager.update(delta, this.game);
   }
 
   handleConnection = (event: any): void => {

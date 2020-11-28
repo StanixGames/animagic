@@ -1,9 +1,9 @@
 import * as PIXI from 'pixi.js';
 import { Game } from '../Game';
 
-import Renderer from './types';
+import { AbstractRenderer } from './types';
 
-export class EntityRenderer extends Renderer {
+export class EntityRenderer extends AbstractRenderer {
   private entityLayer: PIXI.Graphics;
   private playerWidth: number;
   private playerHeight: number;
@@ -17,17 +17,21 @@ export class EntityRenderer extends Renderer {
     this.playerHeight = this.playerWidth * 1.6;
   }
 
-  init() {
+  init(): Promise<void> {
     this.game.app.stage.addChild(this.entityLayer);
+    
+    return Promise.resolve();
+  }
+
+  destroy(): Promise<void> {
+    this.game.app.stage.removeChild(this.entityLayer);
+
+    return Promise.resolve();
   }
 
   resize = (width: number, height: number): void => {
     this.playerWidth = height / 20;
     this.playerHeight = this.playerWidth * 1.6;
-  }
-
-  destroy() {
-    this.game.app.stage.removeChild(this.entityLayer);
   }
 
   prepare(): void {
@@ -37,32 +41,37 @@ export class EntityRenderer extends Renderer {
   }
   
   render(): void {
-    this.entityLayer.beginFill(0x18de5a, 1);
-    this.entityLayer.drawRect(
-      window.innerWidth / 2 - this.playerWidth / 2,
-      window.innerHeight / 2 - this.playerHeight / 2,
-      this.playerWidth,
-      this.playerHeight,
-    );
-    this.entityLayer.endFill();
-    this.entityLayer.closePath();
+    const cameraOffset = this.game.cameraManager.position;
+    // this.entityLayer.beginFill(0x18de5a, 1);
+    // this.entityLayer.drawRect(
+    //   window.innerWidth / 2 - this.playerWidth / 2,
+    //   window.innerHeight / 2 - this.playerHeight / 2,
+    //   this.playerWidth,
+    //   this.playerHeight,
+    // );
+    // this.entityLayer.endFill();
+    // this.entityLayer.closePath();
 
-    const offset = this.game.playerManager.getPos();
-    const CAMERA_OFFSET_X = offset.x;
-    const CAMERA_OFFSET_Y = offset.y;
+    // const offset = this.game.playerManager.getPos();
+    // const cameraOffsetX = window.innerWidth / 2 / this.; //offset.x;
+    // const cameraOffsetY = window.innerHeight / 2; //offset.y;
 
-    const players = this.game.playerManager.getPlayers();
+    const { entities } = this.game.worldManager.world;
 
-    players.forEach(player => {
-      this.entityLayer.beginFill(0xFFFFFF, 1);
+    for (let entity of entities.values()) {
+      this.entityLayer.beginFill(entity.color, 1);
       this.entityLayer.drawRect(
-        player.position.x - CAMERA_OFFSET_X + window.innerWidth / 2 - this.playerWidth / 2,
-        player.position.y - CAMERA_OFFSET_Y + window.innerHeight / 2 - this.playerHeight / 2,
-        this.playerWidth,
-        this.playerHeight,
+        entity.position.x - entity.size.x / 2 + cameraOffset.x,
+        entity.position.y - entity.size.y / 2 + cameraOffset.y,
+        entity.size.x,
+        entity.size.y,
       );
       this.entityLayer.endFill();
       this.entityLayer.closePath();
-    });
+    }
+
+    // entities.values().forEach((entity) => {
+      
+    // });
   }
 }
