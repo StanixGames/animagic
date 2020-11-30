@@ -1,17 +1,25 @@
-import { Manager } from '../types';
+import { Manager, Vector } from '../types';
 import { Game } from '../Game';
 
 import { Entity } from './Entity';
 import { World } from './World';
+import { Chunk } from './Chunk';
 // import { WorldTile } from './WorldTile';
 
 export class WorldManager extends Manager {
   readonly world: World;
   private scaling = 20;
+  private playerEntityId: string | null;
+  private playerPrevChunkPosition: Vector;
 
   constructor(game: Game) {
     super(game);
     this.world = new World();
+    this.playerEntityId = null;
+    this.playerPrevChunkPosition = {
+      x: 0,
+      y: 0,
+    };
   }
 
   init(): Promise<void> {
@@ -19,7 +27,30 @@ export class WorldManager extends Manager {
   }
 
   destroy(): Promise<void> {
+    this.world.destroy();
+    
     return Promise.resolve();
+  }
+
+  update = (delta: number) => {
+    if (!this.playerEntityId) {
+      return;
+    }
+    const playerEntity = this.world.entities.get(this.playerEntityId);
+
+    if (!playerEntity) {
+      return;
+    }
+
+    const chunkX = playerEntity.position.x / 8;
+    const chunkY = playerEntity.position.y / 8;
+
+    if (this.playerPrevChunkPosition.x !== chunkX || this.playerPrevChunkPosition.y !== chunkY) {
+      console.log('GET NEW CHUNKS');
+
+      this.playerPrevChunkPosition.x = chunkX;
+      this.playerPrevChunkPosition.y = chunkY;
+    }
   }
 
   public toWorldDistance = (distance: number) => {
@@ -39,12 +70,28 @@ export class WorldManager extends Manager {
     return this.scaling;
   }
 
-  // public getChunkAt = (x: number, y: number): Chunk | undefined => {
-  //   return undefined;
-  //   // return this.chunks.get(`${x}.${y}`);
-  // };
+  public getPlayerEntity = (): Entity | undefined => {
+    if (!this.playerEntityId) {
+      return undefined;
+    }
+
+    return this.world.entities.get(this.playerEntityId);
+  }
+
+  public getChunkAt = (x: number, y: number): Chunk | undefined => {
+    return this.world.chunks.get(`${x}.${y}`);
+  };
 
   public addPlayer = (entity: Entity) => {
-    this.world.addEntity(entity)
+    this.playerEntityId = entity.id;
+    this.world.addEntity(entity);
+  }
+
+  public patchWorld = (entities: Array<Entity>) => {
+    this.world.patchEntities(entities);
+  }
+
+  public patchChunk = (chunk: Chunk) => {
+    this.world.patchChunk(chunk);
   }
 }

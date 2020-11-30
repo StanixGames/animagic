@@ -168,7 +168,7 @@ server.on('upgrade', (req, socket, head) => __awaiter(void 0, void 0, void 0, fu
         wss.handleUpgrade(req, socket, head, (ws) => {
             const { login, firstName, lastName, } = user;
             network_1.NetworkManager.handleConnection(ws, session, login, firstName, lastName);
-            wss.emit('connection', ws, req);
+            wss.emit('connection', ws, session);
         });
     }
     else {
@@ -176,11 +176,16 @@ server.on('upgrade', (req, socket, head) => __awaiter(void 0, void 0, void 0, fu
         socket.destroy();
     }
 }));
-wss.on('connection', function (socket, req) {
+wss.on('connection', function (socket, session) {
     socket.on('message', (message) => {
-        // console.log(message);
+        // console.log(session, message);
+        const user = doGetUser(session);
+        if (!user) {
+            console.error('Invalid user!');
+            socket.close();
+        }
         try {
-            const packet = network_1.PacketManager.parsePacket(message, socket);
+            const packet = network_1.PacketManager.parsePacket(message, socket, user.login);
             if (!packet) {
                 console.log('Invalid Packet!', message);
                 return;

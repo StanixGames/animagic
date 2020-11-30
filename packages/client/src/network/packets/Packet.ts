@@ -3,6 +3,10 @@ type PacketType =
 | 'CLIENTS_STATE'
 
 | 'PLAYER_JOIN'
+| 'PLAYER_MOVE'
+
+| 'WORLD_UPDATE'
+| 'WORLD_CHUNK_UPDATE'
 
 | 'INVALID_PACKET';
 

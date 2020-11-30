@@ -30,6 +30,7 @@ NetworkManager.handleConnection = (socket, session, login, firstName, lastName) 
     const clientsStatePacketIn = {
         type: 'CLIENTS_STATE',
         socket,
+        login: client.login,
         clients: ClientManager_1.ClientManager.getAllAsArray(),
     };
     PacketManager_1.PacketManager.queuePacket(clientsStatePacketIn);
@@ -39,5 +40,6 @@ NetworkManager.handleDisconnection = () => {
 };
 NetworkManager.update = (delta) => {
     PacketManager_1.PacketManager.update(delta);
+    // console.log('delta', delta)
 };
 //# sourceMappingURL=NetworkManager.js.map

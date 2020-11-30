@@ -5,9 +5,12 @@ import { InputManager, PlayerManager, CameraManager } from './managers';
 import { NetworkManager } from './network/NetworkManager';
 import { Renderer } from './renderer';
 
+const TICK_RENDER_LENGTH_MS = 16;
+const TICK_UPDATE_LENGTH_MS = 50;
+
 export class Game {
-  private previousTick = 0;
-  private tickUpdateLengthMs = 16;
+  private previousTickRender = 0;
+  private previousTickUpdate = 0;
 
   readonly app: PIXI.Application;
   readonly renderer: Renderer;
@@ -99,21 +102,31 @@ export class Game {
   tick = (time: number) => {
     const now = Date.now();
 
-    if (this.previousTick + this.tickUpdateLengthMs <= now) {
-      var delta = (now - this.previousTick) / 1000;
-      this.previousTick = now;
+    if (this.previousTickUpdate + TICK_UPDATE_LENGTH_MS <= now) {
+      var delta = (now - this.previousTickUpdate) / 1000;
+      this.previousTickUpdate = now;
 
       this.update(delta);
-      // console.log(1000 / (delta * 1000))
+    }
+
+    if (this.previousTickRender + TICK_RENDER_LENGTH_MS <= now) {
+      var delta = (now - this.previousTickRender) / 1000;
+      this.previousTickRender = now;
+
+      this.render(delta);
     }
   }
 
+  render = (delta: number) => {
+    this.renderer.prepare();
+    this.renderer.render();
+    this.cameraManager.render(delta);
+  };
+  
   update = (delta: number) => {
     this.networkManager.update(delta);
     this.playerManager.update(delta);
-
-    this.renderer.prepare();
-
-    this.renderer.render();
-  };
+    this.worldManager.update(delta);
+    this.cameraManager.update(delta);
+  }
 }

@@ -2,13 +2,19 @@ import { WorldManager } from './managers';
 import { NetworkManager } from './network';
 
 class Game {
-  private tickLengthMs = 1000 / 20;
+  private tickLengthMs = 1000 / 10;
   private previousTick = Date.now();
 
   readonly worldManager: WorldManager;
 
   constructor() {
     this.worldManager = new WorldManager();
+
+    this.init();
+  }
+
+  init = async () => {
+    await this.worldManager.init();
 
     this.loop();
   }

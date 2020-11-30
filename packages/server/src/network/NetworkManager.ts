@@ -43,6 +43,7 @@ export class NetworkManager {
     const clientsStatePacketIn: ClientsStatePacket.In = {
       type: 'CLIENTS_STATE',
       socket,
+      login: client.login,
       clients: ClientManager.getAllAsArray(),
     }
     PacketManager.queuePacket(clientsStatePacketIn);
@@ -54,5 +55,7 @@ export class NetworkManager {
 
   public static update = (delta: number) => {
     PacketManager.update(delta);
+
+    // console.log('delta', delta)
   }
 }

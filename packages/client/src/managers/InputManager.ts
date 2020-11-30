@@ -52,9 +52,9 @@ export class InputManager extends Manager {
 
   handleMouseMove = (event: MouseEvent): void => {
     const { movementX, movementY } = event;
-    if (this.mouseDown[0]) {
-      const deltaX = this.game.worldManager.toWorldDistance(movementX);
-      const deltaY = this.game.worldManager.toWorldDistance(movementY);
+    if (this.mouseDown[1]) {
+      const deltaX = -1 * this.game.worldManager.toWorldDistance(movementX);
+      const deltaY = -1 * this.game.worldManager.toWorldDistance(movementY);
       
       this.game.cameraManager.moveCamera(deltaX, deltaY);
     }

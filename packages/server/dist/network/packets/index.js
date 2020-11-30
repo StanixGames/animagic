@@ -14,4 +14,7 @@ __exportStar(require("./Packet"), exports);
 __exportStar(require("./ClientConnectedPacket"), exports);
 __exportStar(require("./ClientsStatePacket"), exports);
 __exportStar(require("./PlayerJoinPacket"), exports);
+__exportStar(require("./WorldUpdatePacket"), exports);
+__exportStar(require("./WorldChunkUpdatePacket"), exports);
+__exportStar(require("./PlayerMovePacket"), exports);
 //# sourceMappingURL=index.js.map

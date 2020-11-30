@@ -5,16 +5,12 @@ import { AbstractRenderer } from './types';
 
 export class EntityRenderer extends AbstractRenderer {
   private entityLayer: PIXI.Graphics;
-  private playerWidth: number;
-  private playerHeight: number;
 
   constructor(game: Game) {
     super(game);
     this.entityLayer = new PIXI.Graphics();
     this.entityLayer.width = window.innerWidth;
     this.entityLayer.height = window.innerHeight;
-    this.playerWidth = window.innerHeight / 20;
-    this.playerHeight = this.playerWidth * 1.6;
   }
 
   init(): Promise<void> {
@@ -30,8 +26,7 @@ export class EntityRenderer extends AbstractRenderer {
   }
 
   resize = (width: number, height: number): void => {
-    this.playerWidth = height / 20;
-    this.playerHeight = this.playerWidth * 1.6;
+    //
   }
 
   prepare(): void {
@@ -42,27 +37,19 @@ export class EntityRenderer extends AbstractRenderer {
   
   render(): void {
     const cameraOffset = this.game.cameraManager.position;
-    // this.entityLayer.beginFill(0x18de5a, 1);
-    // this.entityLayer.drawRect(
-    //   window.innerWidth / 2 - this.playerWidth / 2,
-    //   window.innerHeight / 2 - this.playerHeight / 2,
-    //   this.playerWidth,
-    //   this.playerHeight,
-    // );
-    // this.entityLayer.endFill();
-    // this.entityLayer.closePath();
-
-    // const offset = this.game.playerManager.getPos();
-    // const cameraOffsetX = window.innerWidth / 2 / this.; //offset.x;
-    // const cameraOffsetY = window.innerHeight / 2; //offset.y;
 
     const { entities } = this.game.worldManager.world;
+    const playerEntity = this.game.worldManager.getPlayerEntity();
 
     for (let entity of entities.values()) {
-      this.entityLayer.beginFill(entity.color, 1);
+      const color = playerEntity && playerEntity.id === entity.id
+        ? 0x00ffff
+        : entity.color;
+
+      this.entityLayer.beginFill(color, 1);
       this.entityLayer.drawRect(
-        entity.position.x - entity.size.x / 2 + cameraOffset.x,
-        entity.position.y - entity.size.y / 2 + cameraOffset.y,
+        entity.position.x - entity.size.x / 2 - cameraOffset.x,
+        entity.position.y - entity.size.y / 2 - cameraOffset.y,
         entity.size.x,
         entity.size.y,
       );
@@ -70,8 +57,43 @@ export class EntityRenderer extends AbstractRenderer {
       this.entityLayer.closePath();
     }
 
-    // entities.values().forEach((entity) => {
-      
-    // });
+    if (!playerEntity) {
+      return;
+    }
+
+    // const localPlayerPos = this.game.playerManager.pos;
+
+    // this.entityLayer.beginFill(0xeb0c40, 1);
+    // this.entityLayer.drawRect(
+    //   localPlayerPos.x - playerEntity.size.x / 2 - cameraOffset.x,
+    //   localPlayerPos.y - playerEntity.size.y / 2 - cameraOffset.y,
+    //   playerEntity.size.x,
+    //   playerEntity.size.y,
+    // );
+    // this.entityLayer.endFill();
+    // this.entityLayer.closePath();
+
+    // this.entityLayer.lineStyle(1, 0xeb0c40);
+    // this.entityLayer.moveTo(
+    //   localPlayerPos.x - playerEntity.size.x / 2 - cameraOffset.x,
+    //   localPlayerPos.y - playerEntity.size.y / 2 - cameraOffset.y,
+    // );
+    // this.entityLayer.lineTo(
+    //   localPlayerPos.x + playerEntity.size.x / 2 - cameraOffset.x,
+    //   localPlayerPos.y - playerEntity.size.y / 2 - cameraOffset.y,
+    // );
+    // this.entityLayer.lineTo(
+    //   localPlayerPos.x + playerEntity.size.x / 2 - cameraOffset.x,
+    //   localPlayerPos.y + playerEntity.size.y / 2 - cameraOffset.y,
+    // );
+    // this.entityLayer.lineTo(
+    //   localPlayerPos.x - playerEntity.size.x / 2 - cameraOffset.x,
+    //   localPlayerPos.y + playerEntity.size.y / 2 - cameraOffset.y,
+    // );
+    // this.entityLayer.lineTo(
+    //   localPlayerPos.x - playerEntity.size.x / 2 - cameraOffset.x,
+    //   localPlayerPos.y - playerEntity.size.y / 2 - cameraOffset.y,
+    // );
+    // this.entityLayer.closePath();
   }
 }

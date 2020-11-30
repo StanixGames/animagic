@@ -5,6 +5,9 @@ import {
   ClientConnectedPacket,
   ClientsStatePacket,
   PlayerJoinPacket,
+  WorldUpdatePacket,
+  WorldChunkUpdatePacket,
+  PlayerMovePacket,
 } from '../network/packets';
 import { Queue } from '../utils';
 import { game } from '../Game';
@@ -21,11 +24,11 @@ export class PacketManager {
 
     while (processedPackets < PACKETS_PER_UPDATE) {
       if (packets.size() === 0) {
-        return;
+        break;
       }
 
       const packet = packets.pop();
-      console.log('processing', packet)
+      // console.log('processing', packet)
       
       switch (packet.type) {
         case 'PLAYER_JOIN': {
@@ -43,10 +46,50 @@ export class PacketManager {
             entity,
           }
 
-          const data = JSON.stringify(packetOut);
-          packet.socket.send(data);
+          packet.socket.send(JSON.stringify(packetOut));
+
+          // send entities
+          const worldUpdatePacketOut: WorldUpdatePacket.Out = {
+            type: 'WORLD_UPDATE',
+            entities: game.worldManager.getEntitiesAsArray(),
+          }
+
+          packet.socket.send(JSON.stringify(worldUpdatePacketOut));
+
+          // send chunks
+          const chunks = game.worldManager.getChunksInRadius(
+            Math.floor(entity.position.x / 8),
+            Math.floor(entity.position.y / 8),
+          );
+
+          chunks.forEach((chunk) => {
+            const worldUpdateChunkPacketOut: WorldChunkUpdatePacket.Out = {
+              type: 'WORLD_CHUNK_UPDATE',
+              chunk
+            }
+            packet.socket.send(JSON.stringify(worldUpdateChunkPacketOut));
+          });
           break;
         };
+
+        case 'PLAYER_MOVE': {
+          const typedPacket = packet as PlayerMovePacket.In;
+          // console.log('player move', typedPacket.velocity, typedPacket.login);
+
+          const entity = game.worldManager.getPlayerEntity(typedPacket.login);
+
+          if (!entity) {
+            console.error('INVALID PLAYER ENTITY INSTANCE');
+            break;
+          }
+
+          game.worldManager.moveEntity(
+            entity.id,
+            typedPacket.velocity,
+          );
+
+          break;
+        }
 
         case 'CLIENTS_STATE': {
           const typedPacket = packet as ClientsStatePacket.In;
@@ -76,17 +119,29 @@ export class PacketManager {
       }
 
       processedPackets += 1;
+
+      ///// UPdate state
+
     }
+
+    // send entities
+    const worldUpdatePacketOut: WorldUpdatePacket.Out = {
+      type: 'WORLD_UPDATE',
+      entities: game.worldManager.getEntitiesAsArray(),
+    }
+
+    PacketManager.broadcast(JSON.stringify(worldUpdatePacketOut));
   }
 
   public static queuePacket = (packet: Packet.In) => {
     packets.push(packet);
   }
 
-  public static parsePacket = (message: string, socket: WebSocket): Packet.In | null => {
+  public static parsePacket = (message: string, socket: WebSocket, login: string): Packet.In | null => {
     const data = JSON.parse(message);
     const packet: Packet.In = {
       socket,
+      login,
       ...data,
     };
 

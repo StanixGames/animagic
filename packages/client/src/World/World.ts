@@ -15,13 +15,12 @@ import { Entity } from './Entity';
 // }
 
 export class World {
-  readonly chunks: Array<Array<Chunk>>;
+  readonly chunks: Map<string, Chunk>;
   readonly entities: Map<string, Entity>;
 
   constructor() {
     this.entities = new Map<string, Entity>();
-    this.chunks = new Array(0);
-    this.chunks[0] = new Array(0);
+    this.chunks = new Map<string, Chunk>();
   }
 
   addEntity = (entity: Entity) => {
@@ -32,11 +31,23 @@ export class World {
     this.entities.set(entity.id, entity);
   }
 
+  patchEntities = (entities: Array<Entity>) => {
+    entities.forEach((entity) => {
+      this.entities.set(entity.id, entity);
+    });
+  }
+
+  patchChunk = (chunk: Chunk) => {
+    const key = `${chunk.x}.${chunk.y}`;
+    this.chunks.set(key, chunk);
+  }
+
   update = (delta: number) => {
     // console.log('update world');
   }
 
   destroy = () => {
-    //
+    this.entities.clear();
+    this.chunks.clear();
   }
 }

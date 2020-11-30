@@ -1,14 +1,16 @@
 import { Game } from '../Game';
 import { Manager, Vector } from '../types';
 import { Player } from './types';
+import { PlayerMovePacket } from '../network/packets';
+import { PacketManager } from '../network';
 
-const VELOCITY_SPEED = 0.3;
-const MAX_SPEED = 5;
+const VELOCITY_SPEED = 0.2;
+const MAX_SPEED = 1;
 
 export class PlayerManager extends Manager {
-  private prevPos: Vector;
-  private pos: Vector;
+  private prevVelocity: Vector;
   private velocity: Vector;
+  readonly pos: Vector;
   private speed: number;
   private players: Array<Player>;
   private playerId: string;
@@ -18,11 +20,12 @@ export class PlayerManager extends Manager {
 
     this.playerId = playerId;
     this.players = [];
+
     this.pos = {
       x: 0,
       y: 0,
     };
-    this.prevPos = {
+    this.prevVelocity = {
       x: 0,
       y: 0,
     };
@@ -42,8 +45,9 @@ export class PlayerManager extends Manager {
   }
 
   update = (delta: number): void => {
-    this.prevPos.x = this.pos.x;
-    this.prevPos.y = this.pos.y;
+    // console.log('Update >', delta)
+    this.prevVelocity.x = this.velocity.x;
+    this.prevVelocity.y = this.velocity.y;
 
     if (this.game.inputManager.isMoveRightPressed) {
       this.velocity.x += VELOCITY_SPEED;
@@ -102,37 +106,35 @@ export class PlayerManager extends Manager {
       this.pos.y += this.velocity.y;
     }
 
-    if (this.prevPos.x !== this.pos.x || this.prevPos.y !== this.pos.y) {
-      const packet = {
-        type: 'playerMove',
-        payload: {
-          playerId: this.playerId,
-          x: this.pos.x,
-          y: this.pos.y,
-        }
+    if (this.prevVelocity.x !== this.velocity.x || this.prevVelocity.y !== this.velocity.y) {
+      const packetOut: PlayerMovePacket.Out = {
+        type: 'PLAYER_MOVE',
+        velocity: {
+          x: this.velocity.x,
+          y: this.velocity.y,
+        },
+        time: delta,
       }
-      this.game.networkManager.sendMessage(JSON.stringify(packet));
+      console.log(packetOut)
+      this.game.networkManager.sendMessage(JSON.stringify(packetOut));
+      // PacketManager.queuePacketOut(packetOut);
     }
   }
   
-  move = (x: number, y: number, playerId: string): void => {
-    if (playerId === this.playerId) {
-      this.pos.x = x;
-      this.pos.y = y;
-    } else {
-      const targetPlayer = this.players.find(p => p.playerId === playerId);      
-      if (!targetPlayer) {
-        return;
-      }
+  // move = (x: number, y: number, playerId: string): void => {
+  //   if (playerId === this.playerId) {
+  //     this.pos.x = x;
+  //     this.pos.y = y;
+  //   } else {
+  //     const targetPlayer = this.players.find(p => p.playerId === playerId);      
+  //     if (!targetPlayer) {
+  //       return;
+  //     }
 
-      targetPlayer.position.x = x;
-      targetPlayer.position.y = y;
-    }
-  };
-
-  getPos = (): Vector => {
-    return this.pos;
-  };
+  //     targetPlayer.position.x = x;
+  //     targetPlayer.position.y = y;
+  //   }
+  // };
 
   public addPlayer = (player: Player): void => {
     if (player.playerId === this.playerId) {

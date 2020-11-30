@@ -13,4 +13,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./Geometry"), exports);
 __exportStar(require("./Queue"), exports);
 __exportStar(require("./Vector"), exports);
+__exportStar(require("./Array2D"), exports);
 //# sourceMappingURL=index.js.map

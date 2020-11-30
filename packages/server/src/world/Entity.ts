@@ -1,7 +1,8 @@
 import { Vector } from '../utils';
 
 export type EntityType =
-| 'player';
+| 'player'
+| 'plant';
 
 export class Entity {
   public id: string;

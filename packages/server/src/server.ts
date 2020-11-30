@@ -199,7 +199,7 @@ server.on('upgrade', async (req: any, socket: any, head: any) => {
 
       NetworkManager.handleConnection(ws, session, login, firstName, lastName);
 
-      wss.emit('connection', ws, req);
+      wss.emit('connection', ws, session);
     });
   } else {
     socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
@@ -207,12 +207,18 @@ server.on('upgrade', async (req: any, socket: any, head: any) => {
   }
 });
 
-wss.on('connection', function (socket: any, req: any) {
+wss.on('connection', function (socket: WebSocket, session: string) {
   socket.on('message', (message: string) => {
-    // console.log(message);
+    // console.log(session, message);
+    const user = doGetUser(session);
+
+    if (!user) {
+      console.error('Invalid user!');
+      socket.close();
+    }
 
     try {
-      const packet = PacketManager.parsePacket(message, socket);
+      const packet = PacketManager.parsePacket(message, socket, user.login);
 
       if (!packet) {
         console.log('Invalid Packet!', message);        

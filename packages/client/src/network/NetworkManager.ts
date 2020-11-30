@@ -3,7 +3,7 @@ import { Game } from '../Game';
 import { Manager } from './Manager';
 import { PacketManager } from './PacketManager';
 
-const WS_URL = 'ws://localhost:1993';
+const WS_URL = 'ws://192.168.68.104:1993';
 
 const WEBSOCKET_OPEN = 1;
 const WEBSOCKET_CLOSED = 3;
@@ -65,7 +65,7 @@ export class NetworkManager extends Manager {
 }
 
   update = (delta: number): void => {
-    PacketManager.update(delta, this.game);
+    PacketManager.update(delta, this.game, this.ws);
   }
 
   handleConnection = (event: any): void => {
@@ -81,7 +81,7 @@ export class NetworkManager extends Manager {
   };
 
   handleMessage = (event: any): void => {
-    console.log('mesage', event.data);
+    // console.log('mesage', event.data);
 
     try {
       const packet = PacketManager.parsePacket(event.data);
@@ -91,7 +91,7 @@ export class NetworkManager extends Manager {
         return;
       }
 
-      PacketManager.queuePacket(packet);
+      PacketManager.queuePacketIn(packet);
     } catch (e) {
       console.error(e.message);
     }

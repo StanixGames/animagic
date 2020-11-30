@@ -13,10 +13,10 @@ PacketManager.update = (delta) => {
     let processedPackets = 0;
     while (processedPackets < PACKETS_PER_UPDATE) {
         if (packets.size() === 0) {
-            return;
+            break;
         }
         const packet = packets.pop();
-        console.log('processing', packet);
+        // console.log('processing', packet)
         switch (packet.type) {
             case 'PLAYER_JOIN':
                 {
@@ -31,11 +31,36 @@ PacketManager.update = (delta) => {
                         login: typedPacket.login,
                         entity,
                     };
-                    const data = JSON.stringify(packetOut);
-                    packet.socket.send(data);
+                    packet.socket.send(JSON.stringify(packetOut));
+                    // send entities
+                    const worldUpdatePacketOut = {
+                        type: 'WORLD_UPDATE',
+                        entities: Game_1.game.worldManager.getEntitiesAsArray(),
+                    };
+                    packet.socket.send(JSON.stringify(worldUpdatePacketOut));
+                    // send chunks
+                    const chunks = Game_1.game.worldManager.getChunksInRadius(Math.floor(entity.position.x / 8), Math.floor(entity.position.y / 8));
+                    chunks.forEach((chunk) => {
+                        const worldUpdateChunkPacketOut = {
+                            type: 'WORLD_CHUNK_UPDATE',
+                            chunk
+                        };
+                        packet.socket.send(JSON.stringify(worldUpdateChunkPacketOut));
+                    });
                     break;
                 }
                 ;
+            case 'PLAYER_MOVE': {
+                const typedPacket = packet;
+                // console.log('player move', typedPacket.velocity, typedPacket.login);
+                const entity = Game_1.game.worldManager.getPlayerEntity(typedPacket.login);
+                if (!entity) {
+                    console.error('INVALID PLAYER ENTITY INSTANCE');
+                    break;
+                }
+                Game_1.game.worldManager.moveEntity(entity.id, typedPacket.velocity);
+                break;
+            }
             case 'CLIENTS_STATE':
                 {
                     const typedPacket = packet;
@@ -61,14 +86,22 @@ PacketManager.update = (delta) => {
             }
         }
         processedPackets += 1;
+        ///// UPdate state
     }
+    // send entities
+    const worldUpdatePacketOut = {
+        type: 'WORLD_UPDATE',
+        entities: Game_1.game.worldManager.getEntitiesAsArray(),
+    };
+    PacketManager.broadcast(JSON.stringify(worldUpdatePacketOut));
 };
 PacketManager.queuePacket = (packet) => {
     packets.push(packet);
 };
-PacketManager.parsePacket = (message, socket) => {
+PacketManager.parsePacket = (message, socket, login) => {
     const data = JSON.parse(message);
-    const packet = Object.assign({ socket }, data);
+    const packet = Object.assign({ socket,
+        login }, data);
     if (!PacketManager.isPacketValid(packet)) {
         return null;
     }
