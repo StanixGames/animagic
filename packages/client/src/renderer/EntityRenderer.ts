@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 import { Game } from '../Game';
 
-import { AbstractRenderer } from './types';
+import { AbstractRenderer } from './AbstractRenderer';
 
 export class EntityRenderer extends AbstractRenderer {
   private entityLayer: PIXI.Graphics;
@@ -26,7 +26,8 @@ export class EntityRenderer extends AbstractRenderer {
   }
 
   resize = (width: number, height: number): void => {
-    //
+    this.entityLayer.width = width;
+    this.entityLayer.height = height;
   }
 
   prepare(): void {
@@ -37,63 +38,27 @@ export class EntityRenderer extends AbstractRenderer {
   
   render(): void {
     const cameraOffset = this.game.cameraManager.position;
+    
+    const location = this.game.locationManager.getCurrentLocation();
 
-    const { entities } = this.game.worldManager.world;
-    const playerEntity = this.game.worldManager.getPlayerEntity();
-
-    for (let entity of entities.values()) {
-      const color = playerEntity && playerEntity.id === entity.id
-        ? 0x00ffff
-        : entity.color;
-
-      this.entityLayer.beginFill(color, 1);
-      this.entityLayer.drawRect(
-        entity.position.x - entity.size.x / 2 - cameraOffset.x,
-        entity.position.y - entity.size.y / 2 - cameraOffset.y,
-        entity.size.x,
-        entity.size.y,
-      );
-      this.entityLayer.endFill();
-      this.entityLayer.closePath();
-    }
-
-    if (!playerEntity) {
+    if (!location) {
       return;
     }
 
-    // const localPlayerPos = this.game.playerManager.pos;
+    const entities = location.getEntities();
 
-    // this.entityLayer.beginFill(0xeb0c40, 1);
-    // this.entityLayer.drawRect(
-    //   localPlayerPos.x - playerEntity.size.x / 2 - cameraOffset.x,
-    //   localPlayerPos.y - playerEntity.size.y / 2 - cameraOffset.y,
-    //   playerEntity.size.x,
-    //   playerEntity.size.y,
-    // );
-    // this.entityLayer.endFill();
-    // this.entityLayer.closePath();
+    entities?.forEach((entity) => {
+      const color = entity.color;
 
-    // this.entityLayer.lineStyle(1, 0xeb0c40);
-    // this.entityLayer.moveTo(
-    //   localPlayerPos.x - playerEntity.size.x / 2 - cameraOffset.x,
-    //   localPlayerPos.y - playerEntity.size.y / 2 - cameraOffset.y,
-    // );
-    // this.entityLayer.lineTo(
-    //   localPlayerPos.x + playerEntity.size.x / 2 - cameraOffset.x,
-    //   localPlayerPos.y - playerEntity.size.y / 2 - cameraOffset.y,
-    // );
-    // this.entityLayer.lineTo(
-    //   localPlayerPos.x + playerEntity.size.x / 2 - cameraOffset.x,
-    //   localPlayerPos.y + playerEntity.size.y / 2 - cameraOffset.y,
-    // );
-    // this.entityLayer.lineTo(
-    //   localPlayerPos.x - playerEntity.size.x / 2 - cameraOffset.x,
-    //   localPlayerPos.y + playerEntity.size.y / 2 - cameraOffset.y,
-    // );
-    // this.entityLayer.lineTo(
-    //   localPlayerPos.x - playerEntity.size.x / 2 - cameraOffset.x,
-    //   localPlayerPos.y - playerEntity.size.y / 2 - cameraOffset.y,
-    // );
-    // this.entityLayer.closePath();
+      this.entityLayer.beginFill(color, 1);
+      this.entityLayer.drawRect(
+        entity.x - entity.width / 2 - cameraOffset.x,
+        entity.y - entity.height / 2 - cameraOffset.y,
+        entity.width,
+        entity.height,
+      );
+      this.entityLayer.endFill();
+      this.entityLayer.closePath();
+    });
   }
 }

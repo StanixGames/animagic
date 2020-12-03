@@ -521,6 +521,11 @@
         "signature": "ebddbd167c2fabd0151f50e5df94ca6d845149c47521280d8867afe3429dd078",
         "affectsGlobalScope": false
       },
+      "../../../node_modules/@types/bson/index.d.ts": {
+        "version": "2d23edce1d4a3b33280970484e17ca87b03e2829d8677ae1501de18269f0498f",
+        "signature": "2d23edce1d4a3b33280970484e17ca87b03e2829d8677ae1501de18269f0498f",
+        "affectsGlobalScope": false
+      },
       "../../../node_modules/@types/range-parser/index.d.ts": {
         "version": "4e88b833be14c7f384e0dcd57bb30acd799e8e34d212635d693e41a75a71164b",
         "signature": "4e88b833be14c7f384e0dcd57bb30acd799e8e34d212635d693e41a75a71164b",
@@ -569,11 +574,6 @@
       "../../../node_modules/@types/connect-redis/index.d.ts": {
         "version": "d124e1575e361182cd928d54386e75cb7ad5d5753962d329b7a2d3176869657c",
         "signature": "d124e1575e361182cd928d54386e75cb7ad5d5753962d329b7a2d3176869657c",
-        "affectsGlobalScope": false
-      },
-      "../../../node_modules/@types/engine.io/index.d.ts": {
-        "version": "2bc5a885dc91b4006192c477dfae4f2856e5809c6ffbf62cc242ac010f15ab51",
-        "signature": "2bc5a885dc91b4006192c477dfae4f2856e5809c6ffbf62cc242ac010f15ab51",
         "affectsGlobalScope": false
       },
       "../../../node_modules/@types/eslint/helpers.d.ts": {
@@ -741,6 +741,11 @@
         "signature": "e437d83044ba17246a861aa9691aa14223ff4a9d6f338ab1269c41c758586a88",
         "affectsGlobalScope": false
       },
+      "../../../node_modules/@types/mongodb/index.d.ts": {
+        "version": "65d2b8464399411802baf36914739c728384cbdf9357cf08203569e831272ebc",
+        "signature": "65d2b8464399411802baf36914739c728384cbdf9357cf08203569e831272ebc",
+        "affectsGlobalScope": false
+      },
       "../../../node_modules/@types/normalize-package-data/index.d.ts": {
         "version": "c9ad058b2cc9ce6dc2ed92960d6d009e8c04bef46d3f5312283debca6869f613",
         "signature": "c9ad058b2cc9ce6dc2ed92960d6d009e8c04bef46d3f5312283debca6869f613",
@@ -804,11 +809,6 @@
       "../../../node_modules/@types/resolve/index.d.ts": {
         "version": "2880728492d6a6baa55411d14cc42fa55714a24b1d1d27ff9a8a610abd47c761",
         "signature": "2880728492d6a6baa55411d14cc42fa55714a24b1d1d27ff9a8a610abd47c761",
-        "affectsGlobalScope": false
-      },
-      "../../../node_modules/@types/socket.io/index.d.ts": {
-        "version": "7d666a6623022683b640930047127f754d79393a29c0f51f3447325f8435809f",
-        "signature": "7d666a6623022683b640930047127f754d79393a29c0f51f3447325f8435809f",
         "affectsGlobalScope": false
       },
       "../../../node_modules/@types/source-list-map/index.d.ts": {
@@ -980,6 +980,9 @@
         "../../../node_modules/@types/node/http.d.ts",
         "../../../node_modules/@types/node/index.d.ts"
       ],
+      "../../../node_modules/@types/bson/index.d.ts": [
+        "../../../node_modules/@types/node/index.d.ts"
+      ],
       "../../../node_modules/@types/connect-redis/index.d.ts": [
         "../../../node_modules/@types/express-session/index.d.ts",
         "../../../node_modules/@types/express/index.d.ts",
@@ -989,12 +992,6 @@
       "../../../node_modules/@types/connect/index.d.ts": [
         "../../../node_modules/@types/node/http.d.ts",
         "../../../node_modules/@types/node/index.d.ts"
-      ],
-      "../../../node_modules/@types/engine.io/index.d.ts": [
-        "../../../node_modules/@types/node/events.d.ts",
-        "../../../node_modules/@types/node/http.d.ts",
-        "../../../node_modules/@types/node/index.d.ts",
-        "../../../node_modules/@types/node/net.d.ts"
       ],
       "../../../node_modules/@types/eslint/index.d.ts": [
         "../../../node_modules/@types/eslint/helpers.d.ts",
@@ -1070,6 +1067,13 @@
       "../../../node_modules/@types/jest/index.d.ts": [
         "../../../node_modules/jest-diff/build/index.d.ts",
         "../../../node_modules/pretty-format/build/index.d.ts"
+      ],
+      "../../../node_modules/@types/mongodb/index.d.ts": [
+        "../../../node_modules/@types/bson/index.d.ts",
+        "../../../node_modules/@types/node/events.d.ts",
+        "../../../node_modules/@types/node/index.d.ts",
+        "../../../node_modules/@types/node/stream.d.ts",
+        "../../../node_modules/@types/node/tls.d.ts"
       ],
       "../../../node_modules/@types/node/base.d.ts": [
         "../../../node_modules/@types/node/assert.d.ts",
@@ -1278,13 +1282,6 @@
         "../../../node_modules/@types/node/http.d.ts",
         "../../../node_modules/@types/node/index.d.ts"
       ],
-      "../../../node_modules/@types/socket.io/index.d.ts": [
-        "../../../node_modules/@types/engine.io/index.d.ts",
-        "../../../node_modules/@types/node/events.d.ts",
-        "../../../node_modules/@types/node/http.d.ts",
-        "../../../node_modules/@types/node/https.d.ts",
-        "../../../node_modules/@types/node/index.d.ts"
-      ],
       "../../../node_modules/@types/testing-library__jest-dom/index.d.ts": [
         "../../../node_modules/@types/jest/index.d.ts"
       ],
@@ -1473,6 +1470,9 @@
         "../../../node_modules/@types/node/http.d.ts",
         "../../../node_modules/@types/node/index.d.ts"
       ],
+      "../../../node_modules/@types/bson/index.d.ts": [
+        "../../../node_modules/@types/node/index.d.ts"
+      ],
       "../../../node_modules/@types/connect-redis/index.d.ts": [
         "../../../node_modules/@types/express-session/index.d.ts",
         "../../../node_modules/@types/express/index.d.ts",
@@ -1482,12 +1482,6 @@
       "../../../node_modules/@types/connect/index.d.ts": [
         "../../../node_modules/@types/node/http.d.ts",
         "../../../node_modules/@types/node/index.d.ts"
-      ],
-      "../../../node_modules/@types/engine.io/index.d.ts": [
-        "../../../node_modules/@types/node/events.d.ts",
-        "../../../node_modules/@types/node/http.d.ts",
-        "../../../node_modules/@types/node/index.d.ts",
-        "../../../node_modules/@types/node/net.d.ts"
       ],
       "../../../node_modules/@types/eslint/index.d.ts": [
         "../../../node_modules/@types/eslint/helpers.d.ts",
@@ -1563,6 +1557,13 @@
       "../../../node_modules/@types/jest/index.d.ts": [
         "../../../node_modules/jest-diff/build/index.d.ts",
         "../../../node_modules/pretty-format/build/index.d.ts"
+      ],
+      "../../../node_modules/@types/mongodb/index.d.ts": [
+        "../../../node_modules/@types/bson/index.d.ts",
+        "../../../node_modules/@types/node/events.d.ts",
+        "../../../node_modules/@types/node/index.d.ts",
+        "../../../node_modules/@types/node/stream.d.ts",
+        "../../../node_modules/@types/node/tls.d.ts"
       ],
       "../../../node_modules/@types/node/base.d.ts": [
         "../../../node_modules/@types/node/assert.d.ts",
@@ -1771,13 +1772,6 @@
         "../../../node_modules/@types/node/http.d.ts",
         "../../../node_modules/@types/node/index.d.ts"
       ],
-      "../../../node_modules/@types/socket.io/index.d.ts": [
-        "../../../node_modules/@types/engine.io/index.d.ts",
-        "../../../node_modules/@types/node/events.d.ts",
-        "../../../node_modules/@types/node/http.d.ts",
-        "../../../node_modules/@types/node/https.d.ts",
-        "../../../node_modules/@types/node/index.d.ts"
-      ],
       "../../../node_modules/@types/testing-library__jest-dom/index.d.ts": [
         "../../../node_modules/@types/jest/index.d.ts"
       ],
@@ -1950,9 +1944,9 @@
       "../../../node_modules/@types/babel__template/index.d.ts",
       "../../../node_modules/@types/babel__traverse/index.d.ts",
       "../../../node_modules/@types/body-parser/index.d.ts",
+      "../../../node_modules/@types/bson/index.d.ts",
       "../../../node_modules/@types/connect-redis/index.d.ts",
       "../../../node_modules/@types/connect/index.d.ts",
-      "../../../node_modules/@types/engine.io/index.d.ts",
       "../../../node_modules/@types/eslint/helpers.d.ts",
       "../../../node_modules/@types/eslint/index.d.ts",
       "../../../node_modules/@types/estree/index.d.ts",
@@ -1980,6 +1974,7 @@
       "../../../node_modules/@types/mime/index.d.ts",
       "../../../node_modules/@types/minimatch/index.d.ts",
       "../../../node_modules/@types/minimist/index.d.ts",
+      "../../../node_modules/@types/mongodb/index.d.ts",
       "../../../node_modules/@types/node/assert.d.ts",
       "../../../node_modules/@types/node/async_hooks.d.ts",
       "../../../node_modules/@types/node/base.d.ts",
@@ -2045,7 +2040,6 @@
       "../../../node_modules/@types/redis/index.d.ts",
       "../../../node_modules/@types/resolve/index.d.ts",
       "../../../node_modules/@types/serve-static/index.d.ts",
-      "../../../node_modules/@types/socket.io/index.d.ts",
       "../../../node_modules/@types/source-list-map/index.d.ts",
       "../../../node_modules/@types/stack-utils/index.d.ts",
       "../../../node_modules/@types/tapable/index.d.ts",

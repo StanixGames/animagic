@@ -11,13 +11,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.game = void 0;
 const managers_1 = require("./managers");
-const network_1 = require("./network");
 class Game {
     constructor() {
         this.tickLengthMs = 1000 / 10;
         this.previousTick = Date.now();
         this.init = () => __awaiter(this, void 0, void 0, function* () {
+            yield this.locationManager.init();
             yield this.worldManager.init();
+            yield this.persistManager.init();
+            yield this.generatorManager.init();
             this.loop();
         });
         this.loop = () => {
@@ -35,13 +37,19 @@ class Game {
             }
         };
         this.update = (delta) => {
-            network_1.NetworkManager.update(delta);
+            this.locationManager.update(delta);
             this.worldManager.update(delta);
         };
         this.destroy = () => {
+            this.locationManager.destroy();
             this.worldManager.destroy();
+            this.persistManager.destroy();
+            this.generatorManager.destroy();
         };
+        this.locationManager = new managers_1.LocationManager();
         this.worldManager = new managers_1.WorldManager();
+        this.persistManager = new managers_1.PersistManager();
+        this.generatorManager = new managers_1.GeneratorManager();
         this.init();
     }
 }

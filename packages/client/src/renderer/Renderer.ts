@@ -1,7 +1,6 @@
-import { Game } from '../Game'
+import { Game } from '../Game';
 
-import { AbstractRenderer } from './types';
-
+import { AbstractRenderer } from './AbstractRenderer';
 import { WorldRenderer } from './WorldRenderer';
 import { EntityRenderer } from './EntityRenderer';
 

@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 
 import { WorldManager } from './World';
-import { InputManager, PlayerManager, CameraManager } from './managers';
+import { InputManager, PlayerManager, CameraManager, LocationManager } from './managers';
 import { NetworkManager } from './network/NetworkManager';
 import { Renderer } from './renderer';
 
@@ -19,6 +19,7 @@ export class Game {
   readonly playerManager: PlayerManager;
   readonly cameraManager: CameraManager;
   readonly networkManager: NetworkManager;
+  readonly locationManager: LocationManager;
 
   constructor() {
     this.app = new PIXI.Application({
@@ -31,6 +32,7 @@ export class Game {
     this.playerManager = new PlayerManager(this, '123');
     this.cameraManager = new CameraManager(this);
     this.networkManager = new NetworkManager(this);
+    this.locationManager = new LocationManager(this);
 
     this.renderer = new Renderer(this);
 
@@ -59,10 +61,13 @@ export class Game {
     return new Promise(async (resolve, reject) => {
       
       this.networkManager.attachSession(session);
-
+      this.locationManager.attachSession(session);
+      
       try {
         await Promise.all([
           this.networkManager.init(),
+          this.locationManager.init(),
+
           this.attachToDOM(),
 
           this.worldManager.init(),
@@ -72,6 +77,9 @@ export class Game {
 
           this.renderer.init(),
         ]);
+
+        this.locationManager.joinGrindir();
+
         resolve();       
       } catch (error) {
         await this.destroy();
@@ -84,6 +92,8 @@ export class Game {
   };
 
   destroy = (): Promise<void[]> => {
+    this.locationManager.leaveCurrentLocation();
+
     return Promise.all([
       this.renderer.destroy(),
 
@@ -92,6 +102,7 @@ export class Game {
       this.inputManager.destroy(),
       this.worldManager.destroy(),
 
+      this.locationManager.destroy(),
       this.networkManager.destroy(),
     ]);
 

@@ -2,7 +2,6 @@ import { Game } from '../Game';
 import { Manager, Vector } from '../types';
 import { Player } from './types';
 import { PlayerMovePacket } from '../network/packets';
-import { PacketManager } from '../network';
 
 const VELOCITY_SPEED = 0.2;
 const MAX_SPEED = 1;
@@ -116,7 +115,7 @@ export class PlayerManager extends Manager {
         time: delta,
       }
       console.log(packetOut)
-      this.game.networkManager.sendMessage(JSON.stringify(packetOut));
+      // this.game.networkManager.sendMessage(JSON.stringify(packetOut));
       // PacketManager.queuePacketOut(packetOut);
     }
   }

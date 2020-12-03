@@ -111,7 +111,7 @@ export class PlayerManager extends Manager {
           y: this.pos.y,
         }
       }
-      this.game.networkManager.sendMessage(JSON.stringify(packet));
+      // this.game.networkManager.sendMessage(JSON.stringify(packet));
     }
   }
   

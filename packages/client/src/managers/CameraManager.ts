@@ -52,16 +52,15 @@ export class CameraManager extends Manager {
   }
 
   update = (delta: number) => {
-    const playerEntity = this.game.worldManager.getPlayerEntity();
 
-    if (!playerEntity) {
-      return;
-    }
+    // if (!playerEntity) {
+    //   return;
+    // }
 
-    this.setCamera(
-      playerEntity.position.x + this.xOrigin,
-      playerEntity.position.y + this.yOrigin,
-    );
+    // this.setCamera(
+    //   playerEntity.position.x + this.xOrigin,
+    //   playerEntity.position.y + this.yOrigin,
+    // );
   }
 
   render = (delta: number) => {

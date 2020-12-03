@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NetworkManager = void 0;
-const PacketManager_1 = require("./PacketManager");
 const ClientManager_1 = require("./ClientManager");
 class NetworkManager {
 }
@@ -25,7 +24,7 @@ NetworkManager.handleConnection = (socket, session, login, firstName, lastName) 
         socket,
         login: client.login,
     };
-    PacketManager_1.PacketManager.queuePacket(playerJoinPacketIn);
+    // PacketManager.queuePacket(playerJoinPacketIn);
     // broadcast all clients
     const clientsStatePacketIn = {
         type: 'CLIENTS_STATE',
@@ -33,13 +32,13 @@ NetworkManager.handleConnection = (socket, session, login, firstName, lastName) 
         login: client.login,
         clients: ClientManager_1.ClientManager.getAllAsArray(),
     };
-    PacketManager_1.PacketManager.queuePacket(clientsStatePacketIn);
+    // PacketManager.queuePacket(clientsStatePacketIn);
 };
 NetworkManager.handleDisconnection = () => {
     //
 };
 NetworkManager.update = (delta) => {
-    PacketManager_1.PacketManager.update(delta);
+    // PacketManager.update(delta);
     // console.log('delta', delta)
 };
 //# sourceMappingURL=NetworkManager.js.map

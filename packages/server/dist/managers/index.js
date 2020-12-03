@@ -11,4 +11,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./WorldManager"), exports);
+__exportStar(require("./LocationManager"), exports);
+__exportStar(require("./PersistManager"), exports);
+__exportStar(require("./GeneratorManager"), exports);
 //# sourceMappingURL=index.js.map

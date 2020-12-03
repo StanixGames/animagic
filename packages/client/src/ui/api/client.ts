@@ -9,7 +9,7 @@ export type APIResponse<T> = AxiosResponse & {
   };
 }
 
-const BASE_URL = 'http://192.168.68.104:1993';
+const BASE_URL = 'http://localhost:1993';
 
 export const client = Axios.create({
   baseURL: BASE_URL,

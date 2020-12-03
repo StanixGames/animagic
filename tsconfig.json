@@ -11,6 +11,7 @@
     "baseUrl": "./packages",
     "jsx": "react",
     "skipLibCheck": true,
+    "experimentalDecorators": true,
     "paths": {
       "@animagic/*": ["./*/src"]
     }
