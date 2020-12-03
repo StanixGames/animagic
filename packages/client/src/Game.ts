@@ -1,7 +1,6 @@
 import * as PIXI from 'pixi.js';
 
-import { WorldManager } from './World';
-import { InputManager, PlayerManager, CameraManager, LocationManager } from './managers';
+import { InputManager, PlayerManager, CameraManager, LocationManager, WorldManager } from './managers';
 import { NetworkManager } from './network/NetworkManager';
 import { Renderer } from './renderer';
 
@@ -37,9 +36,7 @@ export class Game {
     this.renderer = new Renderer(this);
 
     window.addEventListener("resize", () => {
-      console.log('resize')
       this.app.renderer.resize(window.innerWidth, window.innerHeight);
-
       this.renderer.resize(window.innerWidth, window.innerHeight);
     });
   }
@@ -62,15 +59,16 @@ export class Game {
       
       this.networkManager.attachSession(session);
       this.locationManager.attachSession(session);
+      this.worldManager.attachSession(session);
       
       try {
         await Promise.all([
           this.networkManager.init(),
           this.locationManager.init(),
+          this.worldManager.init(),
 
           this.attachToDOM(),
 
-          this.worldManager.init(),
           this.inputManager.init(),
           this.cameraManager.init(),
           this.playerManager.init(),
@@ -100,8 +98,8 @@ export class Game {
       this.playerManager.destroy(),
       this.cameraManager.destroy(),
       this.inputManager.destroy(),
+      
       this.worldManager.destroy(),
-
       this.locationManager.destroy(),
       this.networkManager.destroy(),
     ]);

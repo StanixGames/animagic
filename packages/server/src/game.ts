@@ -53,11 +53,13 @@ class Game {
     this.worldManager.update(delta);
   }
 
-  destroy = () => {
-    this.locationManager.destroy();
-    this.worldManager.destroy();
-    this.persistManager.destroy();
-    this.generatorManager.destroy();
+  destroy = async () => {
+    await Promise.all([
+      this.locationManager.destroy(),
+      this.worldManager.destroy(),
+      this.persistManager.destroy(),
+      this.generatorManager.destroy(),
+    ]);
   }
 }
 

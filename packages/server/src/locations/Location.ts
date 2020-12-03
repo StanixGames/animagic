@@ -24,7 +24,18 @@ export class Location<State extends LocationState> extends Colyseus.Room<State> 
     const { session } = options;
 
     if (DB.checkSession(session)) {
-      console.log('known user')
+      const user = DB.getUser(session);
+
+      if (!user) {
+        return false;
+      }
+
+      const { login } = user;
+      console.log('known user', user.login);
+      client.userData = {
+        login,
+      };
+      
       return true;
     }
     return false;

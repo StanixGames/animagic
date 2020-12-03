@@ -1,11 +1,12 @@
 import { Manager } from './Manager';
-import { config } from '../config';
+import { game } from '../Game';
 
 import { LocationState } from '../locations/LocationState';
-import { Entity, Player } from '../models';
-import { Vector } from '../utils';
+import { WorldState } from '../world';
+import { Player } from '../models';
 
 export class WorldManager extends Manager {
+  public world: WorldState | undefined;
   public locationsState: Map<string, LocationState>;
   public players: Map<string, Player>;
 
@@ -13,18 +14,48 @@ export class WorldManager extends Manager {
     super();
     this.locationsState = new Map<string, LocationState>();
     this.players = new Map<string, Player>();
+    this.world = undefined;
   }
 
   init(): Promise<void> {
-    return Promise.resolve();
+    return new Promise(async (resolve, reject) => {
+      try {
+        const persistState = await game.persistManager.loadWorldState();
+
+        const players = new Map<string, Player>();
+
+        persistState.players.forEach((player) => {
+          players.set(player.id, player);
+        });
+
+        this.world = {
+          players,
+        };
+
+        console.log('Load the world state');
+        return resolve();
+      } catch (error) {
+        console.log('Cannot load the world state');
+        return reject(error);
+      }
+    });
   }
 
   destroy(): Promise<void> {
-    return Promise.resolve();
+    return new Promise(async (resolve, reject) => {
+      try {
+        await game.persistManager.saveWorldState(this.world);
+        console.log('Saved the world state');
+        return resolve();
+      } catch (error) {
+        console.log('Cannot save the world state');
+        return reject(error);
+      }
+    });
   }
 
   public createPlayer = (id: string) => {
-    
+
   }
 
   public addState = (id: string, state: LocationState) => {

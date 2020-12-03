@@ -11,9 +11,51 @@ const Manager_1 = require("./Manager");
 class PersistManager extends Manager_1.Manager {
     constructor() {
         super();
+        this.loadWorldState = () => {
+            return new Promise((resolve, reject) => {
+                const path = `${__dirname}/../../data/world.data`;
+                fs_1.default.readFile(path, 'utf8', (err, data) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    try {
+                        const persistState = JSON.parse(data);
+                        return resolve(persistState);
+                    }
+                    catch (err) {
+                        const initPersistState = Game_1.game.generatorManager.generateWorld();
+                        return resolve(initPersistState);
+                    }
+                });
+            });
+        };
+        this.saveWorldState = (state) => {
+            return new Promise((resolve, reject) => {
+                if (!state) {
+                    return reject();
+                }
+                const players = new Array();
+                for (let player of state.players.values()) {
+                    players.push(player);
+                }
+                const persistState = {
+                    players,
+                };
+                const data = JSON.stringify(persistState);
+                const path = `${__dirname}/../../data/world.data`;
+                fs_1.default.writeFile(path, data, 'utf8', (err) => {
+                    if (err) {
+                        reject();
+                    }
+                    else {
+                        resolve();
+                    }
+                });
+            });
+        };
         this.loadLocationState = (stateId) => {
             return new Promise((resolve, reject) => {
-                const path = `${__dirname}/../../${stateId}.data`;
+                const path = `${__dirname}/../../data/${stateId}.data`;
                 fs_1.default.readFile(path, 'utf8', (err, data) => {
                     if (err) {
                         return reject(err);
@@ -24,7 +66,7 @@ class PersistManager extends Manager_1.Manager {
                     }
                     catch (err) {
                         const bounds = new models_1.AABB(5, 5, 12, 18);
-                        const initPersistState = Game_1.game.generatorManager.generateWorld(bounds);
+                        const initPersistState = Game_1.game.generatorManager.generateGrindir(bounds);
                         return resolve(initPersistState);
                     }
                 });
@@ -50,7 +92,7 @@ class PersistManager extends Manager_1.Manager {
                     entities: entitiesArr,
                 };
                 const data = JSON.stringify(locationState);
-                const path = `${__dirname}/../../${state.id}.data`;
+                const path = `${__dirname}/../../data/${state.id}.data`;
                 fs_1.default.writeFile(path, data, 'utf8', (err) => {
                     if (err) {
                         reject();

@@ -40,12 +40,14 @@ class Game {
             this.locationManager.update(delta);
             this.worldManager.update(delta);
         };
-        this.destroy = () => {
-            this.locationManager.destroy();
-            this.worldManager.destroy();
-            this.persistManager.destroy();
-            this.generatorManager.destroy();
-        };
+        this.destroy = () => __awaiter(this, void 0, void 0, function* () {
+            yield Promise.all([
+                this.locationManager.destroy(),
+                this.worldManager.destroy(),
+                this.persistManager.destroy(),
+                this.generatorManager.destroy(),
+            ]);
+        });
         this.locationManager = new managers_1.LocationManager();
         this.worldManager = new managers_1.WorldManager();
         this.persistManager = new managers_1.PersistManager();

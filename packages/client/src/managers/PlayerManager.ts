@@ -1,7 +1,6 @@
 import { Game } from '../Game';
 import { Manager, Vector } from '../types';
 import { Player } from './types';
-import { PlayerMovePacket } from '../network/packets';
 
 const VELOCITY_SPEED = 0.2;
 const MAX_SPEED = 1;
@@ -105,19 +104,19 @@ export class PlayerManager extends Manager {
       this.pos.y += this.velocity.y;
     }
 
-    if (this.prevVelocity.x !== this.velocity.x || this.prevVelocity.y !== this.velocity.y) {
-      const packetOut: PlayerMovePacket.Out = {
-        type: 'PLAYER_MOVE',
-        velocity: {
-          x: this.velocity.x,
-          y: this.velocity.y,
-        },
-        time: delta,
-      }
-      console.log(packetOut)
-      // this.game.networkManager.sendMessage(JSON.stringify(packetOut));
-      // PacketManager.queuePacketOut(packetOut);
-    }
+    // if (this.prevVelocity.x !== this.velocity.x || this.prevVelocity.y !== this.velocity.y) {
+    //   const packetOut: PlayerMovePacket.Out = {
+    //     type: 'PLAYER_MOVE',
+    //     velocity: {
+    //       x: this.velocity.x,
+    //       y: this.velocity.y,
+    //     },
+    //     time: delta,
+    //   }
+    //   console.log(packetOut)
+    //   // this.game.networkManager.sendMessage(JSON.stringify(packetOut));
+    //   // PacketManager.queuePacketOut(packetOut);
+    // }
   }
   
   // move = (x: number, y: number, playerId: string): void => {

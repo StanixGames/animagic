@@ -11,7 +11,13 @@ const getRandomTileId = () => {
 class GeneratorManager extends Manager_1.Manager {
     constructor() {
         super();
-        this.generateWorld = (bounds) => {
+        this.generateWorld = () => {
+            const state = {
+                players: [],
+            };
+            return state;
+        };
+        this.generateGrindir = (bounds) => {
             const tiles = new Array();
             for (let x = bounds.minX; x < bounds.maxX; x += 1) {
                 for (let y = bounds.minY; y < bounds.maxY; y += 1) {

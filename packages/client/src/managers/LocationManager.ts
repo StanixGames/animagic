@@ -30,6 +30,8 @@ export class LocationManager extends Manager {
     if (client) {
       const location = new GrindirLocation(client);
 
+      console.log('Try to join grindir')
+
       try {
         await location.init({
           session: this.session,

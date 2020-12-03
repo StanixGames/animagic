@@ -1,53 +1,55 @@
-import { v4 } from 'uuid';
-
-import { Chunk } from './Chunk';
-import { Block } from './Block';
-import { Entity } from './Entity';
-
-// const generate = (chunk: Chunk) => {
-//   for (let i = 0; i < chunk.blocks.length; i += 1) {
-//     const x = i % Chunk.SIZE;
-//     const y = Math.floor(i / Chunk.SIZE);
-//     const material = Math.random() > 0.3 ? 'dirt' : 'sand';
-
-//     chunk.blocks[i] = new Block(x, y, material);
-//   }
-// }
+import * as Colyseus from 'colyseus.js';
 
 export class World {
-  readonly chunks: Map<string, Chunk>;
-  readonly entities: Map<string, Entity>;
+  private room: Colyseus.Room<any> | null;
+  private client: Colyseus.Client;
 
-  constructor() {
-    this.entities = new Map<string, Entity>();
-    this.chunks = new Map<string, Chunk>();
+  constructor(client: Colyseus.Client) {
+    this.client = client;
+    this.room = null;
   }
 
-  addEntity = (entity: Entity) => {
-    if (this.entities.has(entity.id)) {
-      throw new Error('ENTITY CONFLICT ID');
-    }
+  init(options?: any): Promise<void> {
+    return new Promise(async (resolve, reject) => {
+      if (!this.client) {
+        throw new Error('Invalid client');
+      }
+  
+      try {
+        this.room = await this.client.joinOrCreate('world', options);
+  
+        if (!this.room) {
+          throw new Error('Invalid room');
+        }
 
-    this.entities.set(entity.id, entity);
-  }
-
-  patchEntities = (entities: Array<Entity>) => {
-    entities.forEach((entity) => {
-      this.entities.set(entity.id, entity);
+        this.room.onMessage("JOIN", (message) => {
+          console.log(this?.client, "received on", this.room?.name, message);
+        });
+  
+        this.room.onError((code, message) => {
+          console.log(this?.client, "couldn't join", this.room?.name);
+        });
+  
+        this.room.onLeave((code) => {
+          console.log(this?.client, "left", this.room?.name);
+        });
+  
+        console.log('joined', this.room);
+        
+        return resolve();
+      } catch (error) {
+        console.log(error);
+        return reject();
+      }
     });
   }
 
-  patchChunk = (chunk: Chunk) => {
-    const key = `${chunk.x}.${chunk.y}`;
-    this.chunks.set(key, chunk);
-  }
-
-  update = (delta: number) => {
-    // console.log('update world');
-  }
-
-  destroy = () => {
-    this.entities.clear();
-    this.chunks.clear();
+  destroy(): Promise<void> {
+    return new Promise((resolve) => {
+      if (this.room) {
+        this.room.leave();
+      }
+      return resolve();
+    });
   }
 }

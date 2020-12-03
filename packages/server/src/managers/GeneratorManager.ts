@@ -2,6 +2,7 @@ import { Manager } from './Manager';
 
 import { AABB, Tile } from '../models';
 import { LocationPersistState } from '../locations/LocationState';
+import { WorldPersistState } from '../world';
 
 const getRandomTileId = () => {
   const min = 0;
@@ -24,7 +25,15 @@ export class GeneratorManager extends Manager {
 
   update(delta: number): void {}
 
-  public generateWorld = (bounds: AABB): LocationPersistState => {
+  public generateWorld = (): WorldPersistState => {
+    const state: WorldPersistState = {
+      players: [],
+    };
+
+    return state;
+  };
+
+  public generateGrindir = (bounds: AABB): LocationPersistState => {
     const tiles = new Array<Tile>();
 
     for (let x = bounds.minX; x < bounds.maxX; x += 1) {

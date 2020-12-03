@@ -1,12 +1,19 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Chunk = exports.Entity = exports.PlayableEntity = exports.World = void 0;
-var World_1 = require("./World");
-Object.defineProperty(exports, "World", { enumerable: true, get: function () { return World_1.World; } });
-var PlayableEntity_1 = require("./PlayableEntity");
-Object.defineProperty(exports, "PlayableEntity", { enumerable: true, get: function () { return PlayableEntity_1.PlayableEntity; } });
-var Entity_1 = require("./Entity");
-Object.defineProperty(exports, "Entity", { enumerable: true, get: function () { return Entity_1.Entity; } });
-var Chunk_1 = require("./Chunk");
-Object.defineProperty(exports, "Chunk", { enumerable: true, get: function () { return Chunk_1.Chunk; } });
+// export { World } from './World';
+// export { PlayableEntity } from './PlayableEntity';
+// export { Entity } from './Entity';
+// export { Chunk } from './Chunk';
+__exportStar(require("./World"), exports);
+__exportStar(require("./WorldState"), exports);
 //# sourceMappingURL=index.js.map

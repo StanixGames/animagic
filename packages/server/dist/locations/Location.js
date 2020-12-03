@@ -36,7 +36,15 @@ class Location extends Colyseus.Room {
     onAuth(client, options, req) {
         const { session } = options;
         if (db_1.DB.checkSession(session)) {
-            console.log('known user');
+            const user = db_1.DB.getUser(session);
+            if (!user) {
+                return false;
+            }
+            const { login } = user;
+            console.log('known user', user.login);
+            client.userData = {
+                login,
+            };
             return true;
         }
         return false;
